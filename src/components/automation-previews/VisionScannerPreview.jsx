@@ -12,7 +12,7 @@ export default function VisionScannerPreview() {
         </div>
         <div className="flex items-center gap-2">
           <span className="px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 text-[11px] font-mono">
-            Edge CV · 2.8 сек
+            Edge CV · Распознано
           </span>
         </div>
       </div>

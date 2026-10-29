@@ -12,7 +12,7 @@ export default function DocumentOcrPreview() {
         </div>
         <div className="flex items-center gap-2 text-white/50">
           <span>OData v4 REST</span>
-          <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-sans">0.18 сек</span>
+          <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-sans">Верифицировано</span>
         </div>
       </div>
 

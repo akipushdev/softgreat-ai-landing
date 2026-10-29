@@ -15,7 +15,6 @@ export default function AutomationExamples() {
       icon: FileText,
       badge: 'Бухгалтерия и Снабжение',
       title: 'Разбор накладной со штампом в 1С',
-      time: '0.18 сек',
       steps: [
         'Оптическая фильтрация и выравнивание геометрии скана',
         'Автоматическая анонимизация персональных данных',
@@ -30,7 +29,6 @@ export default function AutomationExamples() {
       icon: MessageSquare,
       badge: 'Отдел продаж и CRM',
       title: 'Квалификация ночного лида в Telegram / MAX',
-      time: '1.2 сек',
       steps: [
         'Семантическое распознавание технических параметров',
         'Проверка складских остатков в 1С в реальном времени',
@@ -44,7 +42,6 @@ export default function AutomationExamples() {
       icon: Table,
       badge: 'Снабжение и Опт',
       title: 'Авто-расценка сметы на 300 строк',
-      time: '8 минут',
       steps: [
         'Нормализация номенклатурного справочника НСИ',
         'Параллельный опрос прайс-листов 5 ключевых поставщиков',
@@ -58,7 +55,6 @@ export default function AutomationExamples() {
       icon: Camera,
       badge: 'Склад и Комплектующие',
       title: 'Vision AI: подбор деталей по фото',
-      time: '2.8 сек',
       steps: [
         'Компьютерное зрение анализирует геометрию и межосевые расстояния',
         'Векторный поиск по 3D-моделям и фотокаталогу деталей',
@@ -72,7 +68,6 @@ export default function AutomationExamples() {
       icon: Truck,
       badge: 'Логистика и Доставка',
       title: 'Авто-трекинг рейса в Telegram / MAX',
-      time: '1.4 сек',
       steps: [
         'Приём входящего запроса по номеру рейса или накладной',
         'Запрос телематики Wialon и статуса рейса из 1C:TMS',
@@ -140,9 +135,6 @@ export default function AutomationExamples() {
                         </div>
                       </div>
                     </div>
-                    <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-black/40 border border-white/10 text-white/70">
-                      {tab.time}
-                    </span>
                   </button>
                 );
               })}

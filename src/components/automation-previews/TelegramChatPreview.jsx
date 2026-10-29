@@ -34,7 +34,7 @@ export default function TelegramChatPreview() {
           </div>
         </div>
 
-        {/* Ответ ИИ-агента за 1.2 секунды */}
+        {/* Ответ ИИ-агента */}
         <div className="flex flex-col items-end max-w-[92%] self-end">
           <div className="rounded-2xl rounded-tr-sm bg-gradient-to-br from-sky-950/70 to-indigo-950/80 border border-sky-500/30 text-white p-3 shadow-md">
             <div className="text-[10px] font-semibold text-sky-400 mb-1 flex items-center gap-1">
@@ -52,7 +52,7 @@ export default function TelegramChatPreview() {
               Счёт №1042 на <strong>84 000 ₽</strong> отправлен вам на почту. Подтвердить отгрузку?
             </p>
             <div className="flex items-center justify-end gap-1 text-[9px] text-white/40 mt-1 font-mono">
-              <span>23:42 (1.2 сек)</span>
+              <span>23:42</span>
               <CheckCheck className="w-3.5 h-3.5 text-sky-400" />
             </div>
           </div>

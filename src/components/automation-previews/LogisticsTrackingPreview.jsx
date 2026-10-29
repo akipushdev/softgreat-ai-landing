@@ -34,7 +34,7 @@ export default function LogisticsTrackingPreview() {
           </div>
         </div>
 
-        {/* Мгновенный ответ ИИ-агента за 1.4 секунды */}
+        {/* Ответ ИИ-агента в мессенджере */}
         <div className="flex flex-col items-end max-w-[94%] self-end">
           <div className="rounded-2xl rounded-tr-sm bg-gradient-to-br from-[#0c1422] to-[#121c2e] border border-sky-500/30 text-white p-3 shadow-md">
             <div className="text-[10px] font-semibold text-sky-400 mb-1.5 flex items-center justify-between">
@@ -83,7 +83,7 @@ export default function LogisticsTrackingPreview() {
                 <ShieldCheck className="w-3 h-3" /> Сверка 1C:TMS + GPS телематика
               </span>
               <div className="flex items-center gap-1">
-                <span>14:18 (1.4 сек)</span>
+                <span>14:18</span>
                 <CheckCheck className="w-3.5 h-3.5 text-sky-400" />
               </div>
             </div>
