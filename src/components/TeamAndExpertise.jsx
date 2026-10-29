@@ -21,15 +21,15 @@ export default function TeamAndExpertise() {
   const slides = [
     {
       image: teamSlide1Img,
-      badge: 'Архитектурный контур SFTG',
+      badge: 'HighLoad & Архитектура',
       title: 'Инженерная команда SFTG AI',
-      desc: 'Ведущие системные архитекторы и разработчики интеграций',
+      desc: 'Проектирование и стресс-тестирование закрытых контуров',
     },
     {
       image: teamSlide2Img,
-      badge: 'HighLoad & On-Premise',
-      title: 'Проектирование и стресс-тесты',
-      desc: 'Развёртывание закрытых контуров и распределённых баз',
+      badge: 'Архитектурный контур SFTG',
+      title: 'Ведущие системные инженеры',
+      desc: 'Разработка OData-шин, API и интеграций',
     },
     {
       image: teamSlide3Img,
