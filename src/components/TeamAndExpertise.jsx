@@ -63,7 +63,7 @@ export default function TeamAndExpertise() {
     if (!isInView || isPaused) return;
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 7000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [isInView, isPaused, slides.length]);
   const advantages = [
@@ -213,15 +213,15 @@ export default function TeamAndExpertise() {
           {/* Правая колонка — Прямой диалог с опытными разработчиками */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-semibold text-sky-400 uppercase tracking-wider mb-4 w-fit">
-              Прямой контакт
+              Команда разработки & Архитектура
             </div>
 
             <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4">
-              Прямой диалог с ведущими разработчиками архитектуры
+              Прямой диалог с нашими разработчиками архитектуры
             </h3>
 
             <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-6 font-normal font-sans">
-              На консультации вы общаетесь напрямую с системными инженерами, которые проектируют структуры 1С, шины API и локальные модели.
+              На встрече вы общаетесь напрямую с нашими разработчиками архитектуры: разбираем реальные регламенты и узкие места в ваших процессах (1С, CRM, документооборот), определяем точки потерь и проектируем контур внедрения без посредников и "испорченного телефона".
             </p>
 
             {/* 3 пункта преимуществ */}
