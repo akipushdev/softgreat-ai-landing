@@ -9,7 +9,6 @@ import {
   Layers,
   Terminal,
   Sparkles,
-  ArrowRight,
   UserCheck
 } from 'lucide-react';
 import SftgLogo from './SftgLogo';
@@ -138,7 +137,7 @@ export default function TeamAndExpertise() {
             </p>
 
             {/* 3 пункта преимуществ */}
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4">
               {advantages.map((adv, idx) => (
                 <div key={idx} className="flex items-start gap-3.5 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05]">
                   <div className="p-2 rounded-lg bg-white/5 border border-white/10 shrink-0 mt-0.5">
@@ -154,17 +153,6 @@ export default function TeamAndExpertise() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Быстрый переход к консультации */}
-            <div>
-              <a
-                href="#lead-form"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white text-black font-semibold text-sm hover:bg-zinc-200 transition-colors shadow-lg shadow-white/5 active:scale-[0.98]"
-              >
-                <span>Заказать консультацию</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
           </div>
         </div>

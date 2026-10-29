@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import SftgLogo from './SftgLogo';
 
 export default function Hero() {
@@ -38,18 +38,11 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Кнопки действий */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <a
-            href="#lead-form"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl text-base font-semibold bg-white text-black hover:bg-zinc-200 transition-all duration-300 active:scale-[0.98] shadow-lg shadow-white/5"
-          >
-            <span>Заказать консультацию</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
+        {/* Кнопка перехода к примерам */}
+        <div className="flex items-center justify-center w-full sm:w-auto">
           <a
             href="#automation-examples"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-medium text-zinc-300 bg-[#090d14] border border-white/10 hover:bg-[#121927] hover:text-white transition-all duration-300 active:scale-[0.98]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-medium text-white bg-white/[0.06] border border-white/15 hover:bg-white/[0.12] hover:border-white/30 transition-all duration-300 active:scale-[0.98] shadow-lg shadow-black/40 backdrop-blur-sm"
           >
             <span>Примеры решений</span>
             <ChevronDown className="w-4 h-4 text-zinc-400" />
