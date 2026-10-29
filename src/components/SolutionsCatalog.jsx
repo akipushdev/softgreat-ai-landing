@@ -13,7 +13,8 @@ import {
   Boxes,
   Cpu,
   Activity,
-  ArrowRight
+  ArrowRight,
+  Truck
 } from 'lucide-react';
 
 export default function SolutionsCatalog() {
@@ -350,6 +351,85 @@ export default function SolutionsCatalog() {
           </div>
         );
 
+      case 'logistics':
+        return (
+          <div className="mb-12 rounded-2xl bg-[#090B10] border border-white/10 p-5 sm:p-7 overflow-hidden relative shadow-xl">
+            {/* Верхний статус-бар */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-white/[0.06] text-xs font-mono">
+              <div className="flex items-center gap-2 text-amber-400">
+                <Truck className="w-4 h-4" />
+                <span className="font-semibold">Логистический контур: 1C:TMS / Wialon ➔ Контроль рейсов и ТТН</span>
+              </div>
+              <div className="flex items-center gap-2 text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Телеметрия активна · 0 задержек на линии</span>
+              </div>
+            </div>
+
+            {/* Двухколоночный интерфейс: Активный рейс vs Предиктивный контроль */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+              {/* Левая часть: Мониторинг борта */}
+              <div className="lg:col-span-6 p-4 rounded-xl bg-black/60 border border-white/[0.08] space-y-2.5">
+                <div className="flex items-center justify-between text-[11px] text-zinc-400 font-mono border-b border-white/[0.05] pb-2">
+                  <span>Рейс Р-4821 • Scania А742РХ 77</span>
+                  <span className="text-emerald-400">В движении (76 км/ч)</span>
+                </div>
+
+                <div className="text-xs text-zinc-300 font-mono">
+                  <span className="text-zinc-500">Маршрут:</span> Минск ➔ РЦ Подольск (трасса М-1, Сафоново)
+                </div>
+
+                <div className="p-3 rounded-lg bg-amber-950/20 border border-amber-500/20 text-xs font-mono space-y-1">
+                  <div className="text-white font-semibold flex justify-between">
+                    <span>Расчётное прибытие (ETA):</span>
+                    <span className="text-emerald-400 font-bold">Сегодня, 19:45</span>
+                  </div>
+                  <div className="text-zinc-300 flex justify-between">
+                    <span>Запас до закрытия окна РЦ:</span>
+                    <span className="text-white">1 час 15 мин (Норма)</span>
+                  </div>
+                  <div className="text-zinc-400 flex justify-between text-[11px]">
+                    <span>Температурный режим:</span>
+                    <span className="text-sky-300">+4.1°C (Рефрижератор)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Правая часть: Экономический эффект */}
+              <div className="lg:col-span-6 p-4 rounded-xl bg-[#0F141C] border border-amber-500/20 relative">
+                <div className="flex items-center justify-between mb-3 text-[11px] font-mono">
+                  <span className="text-zinc-200 font-semibold flex items-center gap-1.5">
+                    <Activity className="w-3.5 h-3.5 text-amber-400" />
+                    Результат авто-диспетчеризации
+                  </span>
+                  <span className="text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                    Авто-контроль
+                  </span>
+                </div>
+
+                <div className="space-y-1.5 text-xs font-mono text-zinc-300">
+                  <div className="flex justify-between py-1 border-b border-white/[0.05]">
+                    <span className="text-zinc-500">Снижение звонков диспетчеру:</span>
+                    <span className="text-white font-semibold">-70% типовых обращений</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-white/[0.05]">
+                    <span className="text-zinc-500">Закрытие рейса водителем:</span>
+                    <span className="text-emerald-400">5 минут (фото ТТН из кабины)</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-white/[0.05]">
+                    <span className="text-zinc-500">Предотвращение штрафов за опоздание:</span>
+                    <span className="text-zinc-200">Предиктивный перенос окон</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-zinc-500">Загрузка обратных рейсов:</span>
+                    <span className="text-emerald-400 font-bold">+22% авто-догруз</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
@@ -363,7 +443,7 @@ export default function SolutionsCatalog() {
           Каталог решений
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-          15 прикладных решений по 4 бизнес-контурам
+          20 прикладных решений по 5 бизнес-контурам
         </h2>
         <p className="max-w-2xl text-base sm:text-lg text-zinc-400 font-normal text-pretty">
           Внедряем ИИ внутрь реальных отделов компании с доказанным экономическим эффектом.

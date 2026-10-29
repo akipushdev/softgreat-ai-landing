@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FileText, MessageSquare, Table, Camera, ShieldCheck, Zap } from 'lucide-react';
+import { FileText, MessageSquare, Table, Camera, Truck, ShieldCheck, Zap } from 'lucide-react';
 import DocumentOcrPreview from './automation-previews/DocumentOcrPreview';
 import TelegramChatPreview from './automation-previews/TelegramChatPreview';
 import EstimateTablePreview from './automation-previews/EstimateTablePreview';
 import VisionScannerPreview from './automation-previews/VisionScannerPreview';
+import LogisticsTrackingPreview from './automation-previews/LogisticsTrackingPreview';
 
 export default function AutomationExamples() {
   const [activeTab, setActiveTab] = useState(0);
@@ -65,6 +66,21 @@ export default function AutomationExamples() {
         'Возможность проверки на действующем стенде',
       ],
       component: <VisionScannerPreview />,
+    },
+    {
+      id: 'logistics',
+      icon: Truck,
+      badge: 'Логистика и Доставка',
+      title: 'Авто-трекинг рейса в Telegram / MAX',
+      time: '1.4 сек',
+      steps: [
+        'Приём входящего запроса по номеру рейса или накладной',
+        'Запрос телематики Wialon и статуса рейса из 1C:TMS',
+        'Прогноз расчётного времени прибытия (ETA) по дорожной ситуации',
+        'Телеметрия датчиков рефрижератора (температурный режим)',
+        'Мгновенная выдача отчёта клиенту без звонка диспетчеру',
+      ],
+      component: <LogisticsTrackingPreview />,
     },
   ];
 

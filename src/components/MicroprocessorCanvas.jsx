@@ -26,7 +26,7 @@ export default function MicroprocessorCanvas() {
     let height = 0;
 
     // Кинематика скролла
-    const scrollFactor = 0.32;
+    const scrollFactor = 0.40;
     let targetScrollY = window.scrollY * scrollFactor;
     let currentScrollY = targetScrollY;
 
@@ -53,14 +53,15 @@ export default function MicroprocessorCanvas() {
       const isTablet = width >= 768 && width < 1100;
 
       // Базовые габариты центральных процессоров
-      const cpuW = isMobile ? Math.min(270, width * 0.86) : Math.min(310, width * 0.38);
-      const cpuH = 145;
+      const cpuW = isMobile ? Math.min(280, width * 0.88) : Math.min(320, width * 0.38);
+      const cpuH = 140;
       const cpuX = width * 0.5 - cpuW / 2;
 
       // ==========================================
-      // ЭШЕЛОН 1: Облачный стек и Входные шлюзы (Y ~ 180 - 600px)
+      // ЭШЕЛОН 1 (Hero): Смещён сразу под кнопки (Y = 640px)
+      // В зоне Y = 0..580px только чистые шины данных, H1 ничем не перекрывается!
       // ==========================================
-      const cpu1Y = 240;
+      const cpu1Y = 640;
 
       chips.push({
         id: 'cloud-llm',
@@ -78,9 +79,9 @@ export default function MicroprocessorCanvas() {
         // Шлюз 1С:Предприятие (слева)
         chips.push({
           id: 'chip-1c',
-          x: isTablet ? cpuX - 190 : cpuX - 240,
-          y: cpu1Y - 40,
-          w: isTablet ? 140 : 160,
+          x: isTablet ? cpuX - 180 : cpuX - 230,
+          y: cpu1Y,
+          w: isTablet ? 140 : 155,
           h: 80,
           label: '1С:ПРЕДПРИЯТИЕ',
           sub: 'ШЛЮЗ ODATA / REST',
@@ -88,50 +89,24 @@ export default function MicroprocessorCanvas() {
           pins: 10,
         });
 
-        // Шлюз Битрикс24 (справа)
+        // Шлюз Битрикс24 CRM (справа)
         chips.push({
           id: 'chip-b24',
-          x: isTablet ? cpuX + cpuW + 50 : cpuX + cpuW + 80,
-          y: cpu1Y - 40,
-          w: isTablet ? 140 : 160,
+          x: isTablet ? cpuX + cpuW + 40 : cpuX + cpuW + 75,
+          y: cpu1Y,
+          w: isTablet ? 140 : 155,
           h: 80,
           label: 'БИТРИКС24 CRM',
           sub: 'ПРОЦЕССЫ И СДЕЛКИ',
           icon: 'crm',
           pins: 10,
         });
-
-        // Telegram / MAX (слева снизу)
-        chips.push({
-          id: 'chip-tg',
-          x: isTablet ? cpuX - 200 : cpuX - 250,
-          y: cpu1Y + 120,
-          w: isTablet ? 150 : 170,
-          h: 80,
-          label: 'TELEGRAM / MAX',
-          sub: 'БОТЫ ЦЕХА И ВОДИТЕЛЕЙ',
-          icon: 'bot',
-          pins: 10,
-        });
-
-        // МойСклад (справа снизу)
-        chips.push({
-          id: 'chip-moysklad',
-          x: isTablet ? cpuX + cpuW + 50 : cpuX + cpuW + 80,
-          y: cpu1Y + 120,
-          w: isTablet ? 150 : 165,
-          h: 80,
-          label: 'МОЙСКЛАД',
-          sub: 'СКЛАДСКИЕ ОСТАТКИ',
-          icon: 'stock',
-          pins: 10,
-        });
       }
 
       // ==========================================
-      // ЭШЕЛОН 2: On-Premise контур и Тонкая настройка (Y ~ 1000 - 1600px)
+      // ЭШЕЛОН 2: On-Premise контур (Y ~ 1650px)
       // ==========================================
-      const cpu2Y = 1150;
+      const cpu2Y = 1650;
 
       chips.push({
         id: 'onprem-llm',
@@ -149,9 +124,9 @@ export default function MicroprocessorCanvas() {
         // LoRA / QLoRA адаптеры (слева)
         chips.push({
           id: 'chip-lora',
-          x: isTablet ? cpuX - 190 : cpuX - 240,
-          y: cpu2Y - 30,
-          w: isTablet ? 145 : 170,
+          x: isTablet ? cpuX - 180 : cpuX - 230,
+          y: cpu2Y,
+          w: isTablet ? 140 : 160,
           h: 80,
           label: 'LORA / QLORA АДАПТЕРЫ',
           sub: 'ДОНАСТРОЙКА ВЕСОВ МОДЕЛЕЙ',
@@ -162,73 +137,117 @@ export default function MicroprocessorCanvas() {
         // RAG Модуль (справа)
         chips.push({
           id: 'chip-rag',
-          x: isTablet ? cpuX + cpuW + 45 : cpuX + cpuW + 75,
-          y: cpu2Y - 30,
-          w: isTablet ? 150 : 180,
+          x: isTablet ? cpuX + cpuW + 40 : cpuX + cpuW + 75,
+          y: cpu2Y,
+          w: isTablet ? 140 : 165,
           h: 80,
           label: 'RAG МОДУЛЬ',
           sub: 'СЕМАНТИЧЕСКИЙ ПОИСК В БАЗЕ',
           icon: 'rag',
           pins: 10,
         });
+      }
 
-        // Vision Сканер (слева ниже)
+      // ==========================================
+      // ЭШЕЛОН 3: Логистика, Телематика и Vision (Y ~ 2850px)
+      // ==========================================
+      const cpu3Y = 2850;
+
+      chips.push({
+        id: 'chip-vision',
+        x: cpuX,
+        y: cpu3Y,
+        w: cpuW,
+        h: 135,
+        label: 'VISION СКАНЕР & ТРЕКИНГ',
+        sub: 'ФОТОКОНТРОЛЬ ТТН И ПЕЧАТЕЙ',
+        icon: 'scanner',
+        pins: isMobile ? 12 : 18,
+      });
+
+      if (!isMobile) {
+        // Telegram / MAX (слева)
         chips.push({
-          id: 'chip-vision',
-          x: isTablet ? cpuX - 190 : cpuX - 230,
-          y: cpu2Y + 140,
-          w: isTablet ? 145 : 170,
+          id: 'chip-tg',
+          x: isTablet ? cpuX - 190 : cpuX - 240,
+          y: cpu3Y,
+          w: isTablet ? 150 : 165,
           h: 80,
-          label: 'VISION СКАНЕР',
-          sub: 'ФОТОКОНТРОЛЬ ТТН И ПЕЧАТЕЙ',
-          icon: 'scanner',
+          label: 'TELEGRAM / MAX',
+          sub: 'БОТЫ ЦЕХА И ВОДИТЕЛЕЙ',
+          icon: 'bot',
+          pins: 10,
+        });
+
+        // МойСклад (справа сверху)
+        chips.push({
+          id: 'chip-moysklad',
+          x: isTablet ? cpuX + cpuW + 40 : cpuX + cpuW + 75,
+          y: cpu3Y - 30,
+          w: isTablet ? 145 : 160,
+          h: 75,
+          label: 'МОЙСКЛАД',
+          sub: 'СКЛАДСКИЕ ОСТАТКИ',
+          icon: 'stock',
+          pins: 10,
+        });
+
+        // Логистика и трекинг (справа снизу)
+        chips.push({
+          id: 'chip-tms',
+          x: isTablet ? cpuX + cpuW + 40 : cpuX + cpuW + 75,
+          y: cpu3Y + 65,
+          w: isTablet ? 155 : 175,
+          h: 75,
+          label: 'ЛОГИСТИКА И ТРЕКИНГ',
+          sub: '1C:TMS · АВТО-ДИСПЕТЧЕР',
+          icon: 'bot',
           pins: 10,
         });
       }
 
       // ==========================================
-      // ЭШЕЛОН 3: База данных и Оркестрация (Y ~ 1900 - 2500px)
+      // ЭШЕЛОН 4: Векторные базы данных и Оркестрация (Y ~ 4150px)
       // ==========================================
-      const tier3Y = 2050;
+      const cpu4Y = 4150;
+
+      chips.push({
+        id: 'chip-postgres',
+        x: cpuX,
+        y: cpu4Y,
+        w: cpuW,
+        h: 135,
+        label: 'ВЕКТОРНАЯ БАЗА ДАННЫХ',
+        sub: 'POSTGRESQL · PGVECTOR',
+        icon: 'db',
+        pins: isMobile ? 12 : 18,
+      });
 
       if (!isMobile) {
-        // Векторная база данных PostgreSQL / pgvector
+        // Агенты в периметре (слева)
         chips.push({
-          id: 'chip-postgres',
-          x: cpuX - 50,
-          y: tier3Y,
-          w: isTablet ? 170 : 195,
-          h: 85,
-          label: 'ВЕКТОРНАЯ БАЗА ДАННЫХ',
-          sub: 'POSTGRESQL · PGVECTOR',
-          icon: 'db',
-          pins: 12,
+          id: 'chip-workers',
+          x: isTablet ? cpuX - 180 : cpuX - 230,
+          y: cpu4Y,
+          w: isTablet ? 145 : 160,
+          h: 80,
+          label: 'АГЕНТЫ В ПЕРИМЕТРЕ',
+          sub: 'ВОРКЕРЫ И ОЧЕРЕДИ',
+          icon: 'code',
+          pins: 10,
         });
 
-        // Python Core Orchestrator
+        // Python Core Orchestrator (справа)
         chips.push({
           id: 'chip-python',
-          x: cpuX + cpuW - (isTablet ? 120 : 145),
-          y: tier3Y,
-          w: isTablet ? 160 : 185,
-          h: 85,
+          x: isTablet ? cpuX + cpuW + 40 : cpuX + cpuW + 75,
+          y: cpu4Y,
+          w: isTablet ? 145 : 165,
+          h: 80,
           label: 'PYTHON CORE API',
-          sub: 'АСИНХРОННЫЕ АГЕНТЫ',
+          sub: 'АСИНХРОННЫЕ СЕРВИСЫ',
           icon: 'code',
-          pins: 12,
-        });
-      } else {
-        // Мобильный компактный чип БД внизу
-        chips.push({
-          id: 'chip-postgres-mob',
-          x: cpuX,
-          y: tier3Y,
-          w: cpuW,
-          h: 85,
-          label: 'ВЕКТОРНАЯ БАЗА ДАННЫХ',
-          sub: 'POSTGRESQL · PGVECTOR',
-          icon: 'db',
-          pins: 12,
+          pins: 10,
         });
       }
 
@@ -237,12 +256,12 @@ export default function MicroprocessorCanvas() {
       // ==========================================
       const busLines = [];
 
-      // 1. Верхние шины от Cloud CPU к верхнему краю
+      // 1. Верхние чистые шины от верхнего края экрана к Cloud CPU (Y=640)
       const numTop = isMobile ? 4 : Math.min(8, Math.floor(cpuW / 32));
       for (let i = 0; i < numTop; i++) {
         const startX = cpuX + 25 + i * ((cpuW - 50) / (numTop - 1));
-        const midY = cpu1Y - 35 - (i % 3) * 16;
-        const angleX = (i < numTop / 2 ? -1 : 1) * 30;
+        const midY = cpu1Y - 60 - (i % 3) * 25;
+        const angleX = (i < numTop / 2 ? -1 : 1) * 35;
         busLines.push([
           { x: startX, y: cpu1Y },
           { x: startX, y: midY },
@@ -251,13 +270,13 @@ export default function MicroprocessorCanvas() {
         ]);
       }
 
-      // 2. Межпроцессорная магистраль (Связь Cloud CPU и On-Premise CPU)
-      const numInter = isMobile ? 4 : 7;
-      for (let i = 0; i < numInter; i++) {
-        const startX = cpuX + 30 + i * ((cpuW - 60) / (numInter - 1));
-        const midY1 = cpu1Y + cpuH + 40 + (i % 3) * 20;
-        const midY2 = cpu2Y - 50 - (i % 3) * 20;
-        const jog = (i % 2 === 0 ? 1 : -1) * 25;
+      // 2. Межпроцессорная магистраль 1 ➔ 2 (Cloud CPU к On-Premise CPU)
+      const numInter1 = isMobile ? 4 : 6;
+      for (let i = 0; i < numInter1; i++) {
+        const startX = cpuX + 35 + i * ((cpuW - 70) / (numInter1 - 1));
+        const midY1 = cpu1Y + cpuH + 60 + (i % 3) * 30;
+        const midY2 = cpu2Y - 60 - (i % 3) * 30;
+        const jog = (i % 2 === 0 ? 1 : -1) * 30;
         busLines.push([
           { x: startX, y: cpu1Y + cpuH },
           { x: startX, y: midY1 },
@@ -268,58 +287,68 @@ export default function MicroprocessorCanvas() {
         ]);
       }
 
-      // 3. Шины от On-Premise CPU к нижнему эшелону (БД и Python)
-      const numDown = isMobile ? 4 : 6;
-      for (let i = 0; i < numDown; i++) {
-        const startX = cpuX + 35 + i * ((cpuW - 70) / (numDown - 1));
-        const midY = cpu2Y + cpuH + 50 + (i % 3) * 25;
-        const angleX = (i % 2 === 0 ? 1 : -1) * 35;
+      // 3. Межпроцессорная магистраль 2 ➔ 3 (On-Premise к Vision & Logistics)
+      const numInter2 = isMobile ? 4 : 6;
+      for (let i = 0; i < numInter2; i++) {
+        const startX = cpuX + 35 + i * ((cpuW - 70) / (numInter2 - 1));
+        const midY1 = cpu2Y + cpuH + 60 + (i % 3) * 30;
+        const midY2 = cpu3Y - 60 - (i % 3) * 30;
+        const jog = (i % 2 === 0 ? -1 : 1) * 30;
         busLines.push([
           { x: startX, y: cpu2Y + cpuH },
-          { x: startX, y: midY },
-          { x: startX + angleX, y: midY + Math.abs(angleX) },
-          { x: startX + angleX, y: tier3Y + 300 },
+          { x: startX, y: midY1 },
+          { x: startX + jog, y: midY1 + Math.abs(jog) },
+          { x: startX + jog, y: midY2 - Math.abs(jog) },
+          { x: startX, y: midY2 },
+          { x: startX, y: cpu3Y },
         ]);
       }
 
-      // 4. Боковые шины к периферийным чипам (на десктопе)
+      // 4. Межпроцессорная магистраль 3 ➔ 4 (Vision к Векторной БД)
+      const numInter3 = isMobile ? 4 : 6;
+      for (let i = 0; i < numInter3; i++) {
+        const startX = cpuX + 35 + i * ((cpuW - 70) / (numInter3 - 1));
+        const midY1 = cpu3Y + 135 + 60 + (i % 3) * 30;
+        const midY2 = cpu4Y - 60 - (i % 3) * 30;
+        const jog = (i % 2 === 0 ? 1 : -1) * 30;
+        busLines.push([
+          { x: startX, y: cpu3Y + 135 },
+          { x: startX, y: midY1 },
+          { x: startX + jog, y: midY1 + Math.abs(jog) },
+          { x: startX + jog, y: midY2 - Math.abs(jog) },
+          { x: startX, y: midY2 },
+          { x: startX, y: cpu4Y },
+        ]);
+      }
+
+      // 5. Выводные шины от Векторной БД вниз к футеру
+      for (let i = 0; i < (isMobile ? 4 : 6); i++) {
+        const startX = cpuX + 35 + i * ((cpuW - 70) / ((isMobile ? 4 : 6) - 1));
+        const midY = cpu4Y + 135 + 40 + (i % 3) * 20;
+        busLines.push([
+          { x: startX, y: cpu4Y + 135 },
+          { x: startX, y: midY },
+          { x: startX, y: 5400 },
+        ]);
+      }
+
+      // 6. Боковые ответвления к чипам
       if (!isMobile) {
-        // Связка с 1С и B24
-        busLines.push([
-          { x: cpuX, y: cpu1Y + 35 },
-          { x: cpuX - 50, y: cpu1Y + 35 },
-          { x: cpuX - 80, y: cpu1Y - 10 },
-          { x: cpuX - 240 + 160, y: cpu1Y - 10 },
-        ]);
-        busLines.push([
-          { x: cpuX + cpuW, y: cpu1Y + 35 },
-          { x: cpuX + cpuW + 50, y: cpu1Y + 35 },
-          { x: cpuX + cpuW + 80, y: cpu1Y - 10 },
-        ]);
+        // К 1С и B24
+        busLines.push([{ x: cpuX, y: cpu1Y + 40 }, { x: cpuX - 75, y: cpu1Y + 40 }]);
+        busLines.push([{ x: cpuX + cpuW, y: cpu1Y + 40 }, { x: cpuX + cpuW + 75, y: cpu1Y + 40 }]);
 
-        // Связка с Telegram и МойСклад
-        busLines.push([
-          { x: cpuX, y: cpu1Y + 100 },
-          { x: cpuX - 50, y: cpu1Y + 100 },
-          { x: cpuX - 80, y: cpu1Y + 155 },
-        ]);
-        busLines.push([
-          { x: cpuX + cpuW, y: cpu1Y + 100 },
-          { x: cpuX + cpuW + 50, y: cpu1Y + 100 },
-          { x: cpuX + cpuW + 80, y: cpu1Y + 155 },
-        ]);
+        // К LoRA и RAG
+        busLines.push([{ x: cpuX, y: cpu2Y + 40 }, { x: cpuX - 70, y: cpu2Y + 40 }]);
+        busLines.push([{ x: cpuX + cpuW, y: cpu2Y + 40 }, { x: cpuX + cpuW + 75, y: cpu2Y + 40 }]);
 
-        // Связка On-Premise с LoRA и RAG
-        busLines.push([
-          { x: cpuX, y: cpu2Y + 40 },
-          { x: cpuX - 45, y: cpu2Y + 40 },
-          { x: cpuX - 70, y: cpu2Y + 10 },
-        ]);
-        busLines.push([
-          { x: cpuX + cpuW, y: cpu2Y + 40 },
-          { x: cpuX + cpuW + 45, y: cpu2Y + 40 },
-          { x: cpuX + cpuW + 75, y: cpu2Y + 10 },
-        ]);
+        // К Telegram и МойСклад/TMS
+        busLines.push([{ x: cpuX, y: cpu3Y + 40 }, { x: cpuX - 75, y: cpu3Y + 40 }]);
+        busLines.push([{ x: cpuX + cpuW, y: cpu3Y + 40 }, { x: cpuX + cpuW + 75, y: cpu3Y + 40 }]);
+
+        // К Воркерам и Python
+        busLines.push([{ x: cpuX, y: cpu4Y + 40 }, { x: cpuX - 70, y: cpu4Y + 40 }]);
+        busLines.push([{ x: cpuX + cpuW, y: cpu4Y + 40 }, { x: cpuX + cpuW + 75, y: cpu4Y + 40 }]);
       }
 
       // Преобразуем магистрали в список сегментов
@@ -335,14 +364,14 @@ export default function MicroprocessorCanvas() {
         });
       });
 
-      // 5. Длинные вертикальные транки по краям платы
+      // 7. Длинные вертикальные транки по краям платы (до 5400px)
       const trunkLeft = isMobile ? 18 : 45;
-      traces.push({ p1: { x: trunkLeft, y: 0 }, p2: { x: trunkLeft, y: 2800 } });
-      traces.push({ p1: { x: trunkLeft + 14, y: 0 }, p2: { x: trunkLeft + 14, y: 2800 } });
+      traces.push({ p1: { x: trunkLeft, y: 0 }, p2: { x: trunkLeft, y: 5400 } });
+      traces.push({ p1: { x: trunkLeft + 14, y: 0 }, p2: { x: trunkLeft + 14, y: 5400 } });
 
       const trunkRight = width - (isMobile ? 18 : 45);
-      traces.push({ p1: { x: trunkRight, y: 0 }, p2: { x: trunkRight, y: 2800 } });
-      traces.push({ p1: { x: trunkRight - 14, y: 0 }, p2: { x: trunkRight - 14, y: 2800 } });
+      traces.push({ p1: { x: trunkRight, y: 0 }, p2: { x: trunkRight, y: 5400 } });
+      traces.push({ p1: { x: trunkRight - 14, y: 0 }, p2: { x: trunkRight - 14, y: 5400 } });
     };
 
     const handleResize = () => {
