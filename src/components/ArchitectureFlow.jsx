@@ -26,7 +26,7 @@ export default function ArchitectureFlow() {
       accent: 'border-blue-500/30 text-blue-400 bg-blue-500/10',
       glow: 'shadow-[0_0_25px_rgba(59,130,246,0.12)]',
       features: [
-        'Интеграция с современными моделями (YandexGPT, GigaChat, API)',
+        'Интеграция с современными моделями (ChatGPT, Claude, Gemini, DeepSeek, YandexGPT, GigaChat)',
         'Динамический роутинг задач под минимальную стоимость токенов',
         'Предварительная деперсонализация и маскирование коммерческих данных',
       ],
