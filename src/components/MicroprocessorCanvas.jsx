@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 
 /**
- * MicroprocessorCanvas — высокотехнологичный интерактивный фон печатной платы и микропроцессора.
+ * MicroprocessorCanvas — высокотехнологичный интерактивный фон печатной платы с кинематическим параллакс-скроллом.
  * 
  * Особенности:
- * - Полноценная архитектура материнской платы / микропроцессора (ЦПУ SFTG BPU-84 в центре,
- *   контроллеры OData/1C Gateway и B24 CRM, шины данных под 90° и 45°, контактные площадки vias).
- * - Живет строго в фоновом слое (z-0). Все карточки и кнопки интерфейса непрозрачны и лежат выше.
- * - Локальная реакция на мышь: подсветка дорожек и бегущие световые импульсы по шинам данных.
+ * - Топология многоуровневого ИИ-кластера:
+ *   1) Эшелон 1 (Hero): Облачный стек (Яндекс GPT, Gemini, ChatGPT) + шлюзы 1С, Битрикс24, Telegram/MAX, МойСклад.
+ *   2) Эшелон 2 (Решения/Архитектура): On-Premise контур (Qwen 2.5, Llama 3.3, 152-ФЗ/99-З), LoRA/QLoRA, RAG-поиск, Vision OCR.
+ *   3) Эшелон 3 (Данные/Цены): PostgreSQL / pgvector и Python Core оркестратор.
+ * - Мягкий параллакс: при вертикальном скролле плата смещается с демпфированием (0.32x), открывая разные уровни микросхем.
+ * - Медленные волновые импульсы курсируют между процессорами и шлюзами.
+ * - Оптимизация производительности: автоматический view-frustum culling (отсечение чипов и шин за пределами экрана).
  */
 export default function MicroprocessorCanvas() {
   const canvasRef = useRef(null);
@@ -21,6 +24,11 @@ export default function MicroprocessorCanvas() {
     let animId;
     let width = 0;
     let height = 0;
+
+    // Кинематика скролла
+    const scrollFactor = 0.32;
+    let targetScrollY = window.scrollY * scrollFactor;
+    let currentScrollY = targetScrollY;
 
     const mouse = {
       x: -1000,
@@ -41,121 +49,264 @@ export default function MicroprocessorCanvas() {
       chips = [];
       pulses = [];
 
-      // 1. Центральный микропроцессор SFTG CORE BPU
-      const cpuW = Math.min(270, width * 0.44);
-      const cpuH = 170;
+      const isMobile = width < 768;
+      const isTablet = width >= 768 && width < 1100;
+
+      // Базовые габариты центральных процессоров
+      const cpuW = isMobile ? Math.min(270, width * 0.86) : Math.min(310, width * 0.38);
+      const cpuH = 145;
       const cpuX = width * 0.5 - cpuW / 2;
-      const cpuY = Math.min(280, height * 0.28);
+
+      // ==========================================
+      // ЭШЕЛОН 1: Облачный стек и Входные шлюзы (Y ~ 180 - 600px)
+      // ==========================================
+      const cpu1Y = 240;
 
       chips.push({
+        id: 'cloud-llm',
         x: cpuX,
-        y: cpuY,
+        y: cpu1Y,
         w: cpuW,
         h: cpuH,
-        label: 'ЯНДЕКС GPT / СУВЕРЕННЫЕ LLM',
-        sub: 'НЕЙРОННОЕ ЯДРО SFTG AI',
-        pins: 16,
+        label: 'ЯНДЕКС GPT / GEMINI / CHATGPT',
+        sub: 'ОБЛАЧНЫЙ СТЕК LLM · БЫСТРЫЙ ОТКЛИК',
+        pins: isMobile ? 12 : 18,
       });
 
-      // Периферийные чипы-адаптеры
-      if (width > 680) {
-        // Чип 1C Gateway
+      if (!isMobile) {
+        // Шлюз 1С:Предприятие (слева)
         chips.push({
-          x: cpuX - 220,
-          y: cpuY + 220,
-          w: 150,
-          h: 85,
+          id: 'chip-1c',
+          x: isTablet ? cpuX - 190 : cpuX - 240,
+          y: cpu1Y - 40,
+          w: isTablet ? 140 : 160,
+          h: 75,
           label: '1С:ПРЕДПРИЯТИЕ',
           sub: 'ШЛЮЗ ODATA / REST',
           pins: 10,
         });
 
-        // Чип B24 CRM
+        // Шлюз Битрикс24 (справа)
         chips.push({
-          x: cpuX + cpuW + 70,
-          y: cpuY + 160,
-          w: 160,
-          h: 90,
+          id: 'chip-b24',
+          x: isTablet ? cpuX + cpuW + 50 : cpuX + cpuW + 80,
+          y: cpu1Y - 40,
+          w: isTablet ? 140 : 160,
+          h: 75,
           label: 'БИТРИКС24 CRM',
           sub: 'ПРОЦЕССЫ И СДЕЛКИ',
+          pins: 10,
+        });
+
+        // Telegram / MAX (слева снизу)
+        chips.push({
+          id: 'chip-tg',
+          x: isTablet ? cpuX - 200 : cpuX - 250,
+          y: cpu1Y + 120,
+          w: isTablet ? 150 : 170,
+          h: 75,
+          label: 'TELEGRAM / MAX',
+          sub: 'БОТЫ ЦЕХА И ВОДИТЕЛЕЙ',
+          pins: 10,
+        });
+
+        // МойСклад (справа снизу)
+        chips.push({
+          id: 'chip-moysklad',
+          x: isTablet ? cpuX + cpuW + 50 : cpuX + cpuW + 80,
+          y: cpu1Y + 120,
+          w: isTablet ? 150 : 165,
+          h: 75,
+          label: 'МОЙСКЛАД',
+          sub: 'СКЛАДСКИЕ ОСТАТКИ',
+          pins: 10,
+        });
+      }
+
+      // ==========================================
+      // ЭШЕЛОН 2: On-Premise контур и Тонкая настройка (Y ~ 1000 - 1600px)
+      // ==========================================
+      const cpu2Y = 1150;
+
+      chips.push({
+        id: 'onprem-llm',
+        x: cpuX,
+        y: cpu2Y,
+        w: cpuW,
+        h: cpuH + 10,
+        label: 'ON-PREMISE LLM · QWEN / LLAMA',
+        sub: 'ЛОКАЛЬНЫЙ КОНТУР · 152-ФЗ РФ И 99-З РБ',
+        pins: isMobile ? 12 : 20,
+      });
+
+      if (!isMobile) {
+        // LoRA / QLoRA адаптеры (слева)
+        chips.push({
+          id: 'chip-lora',
+          x: isTablet ? cpuX - 190 : cpuX - 240,
+          y: cpu2Y - 30,
+          w: isTablet ? 145 : 170,
+          h: 80,
+          label: 'LORA / QLORA АДАПТЕРЫ',
+          sub: 'ДОНАСТРОЙКА ВЕСОВ МОДЕЛЕЙ',
+          pins: 10,
+        });
+
+        // RAG / Поиск в корпоративной базе знаний (справа)
+        chips.push({
+          id: 'chip-rag',
+          x: isTablet ? cpuX + cpuW + 45 : cpuX + cpuW + 75,
+          y: cpu2Y - 30,
+          w: isTablet ? 150 : 180,
+          h: 80,
+          label: 'RAG / ПОИСК В БАЗЕ',
+          sub: 'ВЕКТОРНЫЙ ПОИСК В НОРМАТИВАХ',
+          pins: 10,
+        });
+
+        // Vision OCR (слева ниже)
+        chips.push({
+          id: 'chip-vision',
+          x: isTablet ? cpuX - 190 : cpuX - 230,
+          y: cpu2Y + 140,
+          w: isTablet ? 145 : 165,
+          h: 75,
+          label: 'VISION & OCR УЗЕЛ',
+          sub: 'РАСПОЗНАВАНИЕ ТТН И ПЕЧАТЕЙ',
+          pins: 10,
+        });
+      }
+
+      // ==========================================
+      // ЭШЕЛОН 3: База данных и Оркестрация (Y ~ 1900 - 2500px)
+      // ==========================================
+      const tier3Y = 2050;
+
+      if (!isMobile) {
+        // PostgreSQL / pgvector
+        chips.push({
+          id: 'chip-postgres',
+          x: cpuX - 40,
+          y: tier3Y,
+          w: isTablet ? 160 : 185,
+          h: 85,
+          label: 'POSTGRESQL / PGVECTOR',
+          sub: 'РЕГИСТРЫ И ЭМБЕДДИНГИ',
+          pins: 12,
+        });
+
+        // Python Core Orchestrator
+        chips.push({
+          id: 'chip-python',
+          x: cpuX + cpuW - (isTablet ? 120 : 145),
+          y: tier3Y,
+          w: isTablet ? 160 : 185,
+          h: 85,
+          label: 'PYTHON CORE API',
+          sub: 'АСИНХРОННЫЕ АГЕНТЫ',
+          pins: 12,
+        });
+      } else {
+        // Мобильный компактный чип БД внизу
+        chips.push({
+          id: 'chip-postgres-mob',
+          x: cpuX,
+          y: tier3Y,
+          w: cpuW,
+          h: 85,
+          label: 'POSTGRESQL / РЕГИСТРЫ 1С',
+          sub: 'БАЗА ДАННЫХ И ИНДЕКСЫ',
           pins: 12,
         });
       }
 
-      if (width > 980) {
-        // База данных
-        chips.push({
-          x: cpuX - 260,
-          y: cpuY - 60,
-          w: 150,
-          h: 80,
-          label: 'БАЗА ДАННЫХ',
-          sub: 'POSTGRESQL / РЕГИСТРЫ',
-          pins: 10,
-        });
-
-        // Анализ сканов и первички
-        chips.push({
-          x: cpuX + cpuW + 110,
-          y: cpuY + 310,
-          w: 155,
-          h: 80,
-          label: 'ОБРАБОТКА СКАНОВ',
-          sub: 'РАСПОЗНАВАНИЕ ТТН / УПД',
-          pins: 10,
-        });
-      }
-
-      // 2. Генерация шин данных от чипов (90° и 45° трассы)
+      // ==========================================
+      // ГЕНЕРАЦИЯ ШИН ДАННЫХ (Bus Lines)
+      // ==========================================
       const busLines = [];
 
-      // Верхние шины от процессора
-      const numTop = Math.min(8, Math.floor(cpuW / 28));
+      // 1. Верхние шины от Cloud CPU к верхнему краю
+      const numTop = isMobile ? 4 : Math.min(8, Math.floor(cpuW / 32));
       for (let i = 0; i < numTop; i++) {
         const startX = cpuX + 25 + i * ((cpuW - 50) / (numTop - 1));
-        const midY = cpuY - 35 - (i % 3) * 18;
-        const angleX = (i < numTop / 2 ? -1 : 1) * 35;
+        const midY = cpu1Y - 35 - (i % 3) * 16;
+        const angleX = (i < numTop / 2 ? -1 : 1) * 30;
         busLines.push([
-          { x: startX, y: cpuY },
+          { x: startX, y: cpu1Y },
           { x: startX, y: midY },
           { x: startX + angleX, y: midY - Math.abs(angleX) },
           { x: startX + angleX, y: 0 },
         ]);
       }
 
-      // Нижние шины от процессора к нижнему краю экрана
-      const numBottom = Math.min(10, Math.floor(cpuW / 24));
-      for (let i = 0; i < numBottom; i++) {
-        const startX = cpuX + 20 + i * ((cpuW - 40) / (numBottom - 1));
-        const midY = cpuY + cpuH + 45 + (i % 4) * 20;
-        const angleX = (i % 2 === 0 ? 1 : -1) * 30;
+      // 2. Межпроцессорная магистраль (Связь Cloud CPU и On-Premise CPU)
+      const numInter = isMobile ? 4 : 7;
+      for (let i = 0; i < numInter; i++) {
+        const startX = cpuX + 30 + i * ((cpuW - 60) / (numInter - 1));
+        const midY1 = cpu1Y + cpuH + 40 + (i % 3) * 20;
+        const midY2 = cpu2Y - 50 - (i % 3) * 20;
+        const jog = (i % 2 === 0 ? 1 : -1) * 25;
         busLines.push([
-          { x: startX, y: cpuY + cpuH },
-          { x: startX, y: midY },
-          { x: startX + angleX, y: midY + Math.abs(angleX) },
-          { x: startX + angleX, y: height },
+          { x: startX, y: cpu1Y + cpuH },
+          { x: startX, y: midY1 },
+          { x: startX + jog, y: midY1 + Math.abs(jog) },
+          { x: startX + jog, y: midY2 - Math.abs(jog) },
+          { x: startX, y: midY2 },
+          { x: startX, y: cpu2Y },
         ]);
       }
 
-      // Боковые шины влево и вправо
-      const numSide = 6;
-      for (let i = 0; i < numSide; i++) {
-        const y = cpuY + 20 + i * ((cpuH - 40) / (numSide - 1));
-        // Влево
-        const leftBend = cpuX - 40 - (i % 3) * 30;
+      // 3. Шины от On-Premise CPU к нижнему эшелону (БД и Python)
+      const numDown = isMobile ? 4 : 6;
+      for (let i = 0; i < numDown; i++) {
+        const startX = cpuX + 35 + i * ((cpuW - 70) / (numDown - 1));
+        const midY = cpu2Y + cpuH + 50 + (i % 3) * 25;
+        const angleX = (i % 2 === 0 ? 1 : -1) * 35;
         busLines.push([
-          { x: cpuX, y },
-          { x: leftBend, y },
-          { x: leftBend - 40, y: y + 40 },
-          { x: 0, y: y + 40 },
+          { x: startX, y: cpu2Y + cpuH },
+          { x: startX, y: midY },
+          { x: startX + angleX, y: midY + Math.abs(angleX) },
+          { x: startX + angleX, y: tier3Y + 300 },
         ]);
-        // Вправо
-        const rightBend = cpuX + cpuW + 40 + (i % 3) * 30;
+      }
+
+      // 4. Боковые шины к периферийным чипам (на десктопе)
+      if (!isMobile) {
+        // Связка с 1С и B24
         busLines.push([
-          { x: cpuX + cpuW, y },
-          { x: rightBend, y },
-          { x: rightBend + 40, y: y - 40 },
-          { x: width, y: y - 40 },
+          { x: cpuX, y: cpu1Y + 35 },
+          { x: cpuX - 50, y: cpu1Y + 35 },
+          { x: cpuX - 80, y: cpu1Y - 10 },
+          { x: cpuX - 240 + 160, y: cpu1Y - 10 },
+        ]);
+        busLines.push([
+          { x: cpuX + cpuW, y: cpu1Y + 35 },
+          { x: cpuX + cpuW + 50, y: cpu1Y + 35 },
+          { x: cpuX + cpuW + 80, y: cpu1Y - 10 },
+        ]);
+
+        // Связка с Telegram и МойСклад
+        busLines.push([
+          { x: cpuX, y: cpu1Y + 100 },
+          { x: cpuX - 50, y: cpu1Y + 100 },
+          { x: cpuX - 80, y: cpu1Y + 155 },
+        ]);
+        busLines.push([
+          { x: cpuX + cpuW, y: cpu1Y + 100 },
+          { x: cpuX + cpuW + 50, y: cpu1Y + 100 },
+          { x: cpuX + cpuW + 80, y: cpu1Y + 155 },
+        ]);
+
+        // Связка On-Premise с LoRA и RAG
+        busLines.push([
+          { x: cpuX, y: cpu2Y + 40 },
+          { x: cpuX - 45, y: cpu2Y + 40 },
+          { x: cpuX - 70, y: cpu2Y + 10 },
+        ]);
+        busLines.push([
+          { x: cpuX + cpuW, y: cpu2Y + 40 },
+          { x: cpuX + cpuW + 45, y: cpu2Y + 40 },
+          { x: cpuX + cpuW + 75, y: cpu2Y + 10 },
         ]);
       }
 
@@ -164,7 +315,7 @@ export default function MicroprocessorCanvas() {
         for (let i = 0; i < bus.length - 1; i++) {
           traces.push({ p1: bus[i], p2: bus[i + 1] });
         }
-        // Vias в точках изгибов и на концах
+        // Vias в точках изгибов
         bus.forEach((pt, pIdx) => {
           if (pIdx > 0 && pIdx < bus.length - 1) {
             vias.push({ x: pt.x, y: pt.y, r: 2.2 });
@@ -172,14 +323,14 @@ export default function MicroprocessorCanvas() {
         });
       });
 
-      // Добавим несколько длинных внешних шин по бокам платы
-      const trunkLeft = 45;
-      traces.push({ p1: { x: trunkLeft, y: 0 }, p2: { x: trunkLeft, y: height } });
-      traces.push({ p1: { x: trunkLeft + 16, y: 0 }, p2: { x: trunkLeft + 16, y: height } });
+      // 5. Длинные вертикальные транки по краям платы
+      const trunkLeft = isMobile ? 18 : 45;
+      traces.push({ p1: { x: trunkLeft, y: 0 }, p2: { x: trunkLeft, y: 2800 } });
+      traces.push({ p1: { x: trunkLeft + 14, y: 0 }, p2: { x: trunkLeft + 14, y: 2800 } });
 
-      const trunkRight = width - 45;
-      traces.push({ p1: { x: trunkRight, y: 0 }, p2: { x: trunkRight, y: height } });
-      traces.push({ p1: { x: trunkRight - 16, y: 0 }, p2: { x: trunkRight - 16, y: height } });
+      const trunkRight = width - (isMobile ? 18 : 45);
+      traces.push({ p1: { x: trunkRight, y: 0 }, p2: { x: trunkRight, y: 2800 } });
+      traces.push({ p1: { x: trunkRight - 14, y: 0 }, p2: { x: trunkRight - 14, y: 2800 } });
     };
 
     const handleResize = () => {
@@ -188,17 +339,23 @@ export default function MicroprocessorCanvas() {
       generateTopology();
     };
 
+    const handleScroll = () => {
+      targetScrollY = window.scrollY * scrollFactor;
+    };
+
     const handleMouseMove = (e) => {
       mouse.targetX = e.clientX;
       mouse.targetY = e.clientY;
       mouse.active = true;
 
-      // При движении мыши запускаем мягкие плавные световые импульсы
-      if (Math.random() > 0.65 && traces.length > 0 && pulses.length < 18) {
+      // При движении мыши запускаем волновые импульсы в виртуальной системе координат
+      const boardMouseY = e.clientY + currentScrollY;
+
+      if (Math.random() > 0.65 && traces.length > 0 && pulses.length < 22) {
         const nearTraces = traces.filter((t) => {
           const midX = (t.p1.x + t.p2.x) / 2;
           const midY = (t.p1.y + t.p2.y) / 2;
-          return Math.hypot(midX - e.clientX, midY - e.clientY) < 220;
+          return Math.hypot(midX - e.clientX, midY - boardMouseY) < 220;
         });
 
         if (nearTraces.length > 0) {
@@ -206,7 +363,7 @@ export default function MicroprocessorCanvas() {
           pulses.push({
             trace: selected,
             progress: 0,
-            speed: 0.005 + Math.random() * 0.004, // Плавное движение, как волна
+            speed: 0.004 + Math.random() * 0.0035, // Мягкая волновая скорость
             length: 0.45,
             life: 1,
           });
@@ -216,43 +373,68 @@ export default function MicroprocessorCanvas() {
 
     handleResize();
     window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     let lastBgPulse = 0;
 
     const render = (time) => {
+      // Плавное следование за курсором и параллакс-скроллом
       mouse.x += (mouse.targetX - mouse.x) * 0.1;
       mouse.y += (mouse.targetY - mouse.y) * 0.1;
+      currentScrollY += (targetScrollY - currentScrollY) * 0.08;
+
+      const boardMouseY = mouse.y + currentScrollY;
 
       // 1. Очистка подложки
       ctx.fillStyle = '#030508';
       ctx.fillRect(0, 0, width, height);
 
-      // Фоновые импульсы раз в ~750мс (плавные, как волны)
-      if (time - lastBgPulse > 750 && traces.length > 0 && pulses.length < 12) {
+      // Видимый диапазон по вертикали с запасом в 120px
+      const viewTop = currentScrollY - 120;
+      const viewBottom = currentScrollY + height + 120;
+
+      // Фоновые импульсы в видимом диапазоне
+      if (time - lastBgPulse > 800 && traces.length > 0 && pulses.length < 16) {
         lastBgPulse = time;
-        const randomTrace = traces[Math.floor(Math.random() * traces.length)];
-        pulses.push({
-          trace: randomTrace,
-          progress: 0,
-          speed: 0.003 + Math.random() * 0.0035, // Медленная плавучая скорость
-          length: 0.5,
-          life: 1,
+        const visibleTraces = traces.filter((t) => {
+          const midY = (t.p1.y + t.p2.y) / 2;
+          return midY >= viewTop && midY <= viewBottom;
         });
+
+        if (visibleTraces.length > 0) {
+          const randomTrace = visibleTraces[Math.floor(Math.random() * visibleTraces.length)];
+          pulses.push({
+            trace: randomTrace,
+            progress: 0,
+            speed: 0.003 + Math.random() * 0.003,
+            length: 0.5,
+            life: 1,
+          });
+        }
       }
 
-      // 2. Отрисовка дорожек печатной платы
+      // 2. Отрисовка дорожек (с учетом смещения currentScrollY)
       const activeRadius = 190;
       for (let i = 0; i < traces.length; i++) {
         const t = traces[i];
+        const minY = Math.min(t.p1.y, t.p2.y);
+        const maxY = Math.max(t.p1.y, t.p2.y);
+
+        // Отсечение за пределами экрана
+        if (maxY < viewTop || minY > viewBottom) continue;
+
         const midX = (t.p1.x + t.p2.x) / 2;
         const midY = (t.p1.y + t.p2.y) / 2;
-        const dist = Math.hypot(midX - mouse.x, midY - mouse.y);
+        const dist = Math.hypot(midX - mouse.x, midY - boardMouseY);
         const isNear = dist < activeRadius;
 
+        const screenY1 = t.p1.y - currentScrollY;
+        const screenY2 = t.p2.y - currentScrollY;
+
         ctx.beginPath();
-        ctx.moveTo(t.p1.x, t.p1.y);
-        ctx.lineTo(t.p2.x, t.p2.y);
+        ctx.moveTo(t.p1.x, screenY1);
+        ctx.lineTo(t.p2.x, screenY2);
 
         if (isNear) {
           const intensity = 1 - dist / activeRadius;
@@ -265,18 +447,21 @@ export default function MicroprocessorCanvas() {
         ctx.stroke();
       }
 
-      // 3. Отрисовка микрочипов (процессоров)
+      // 3. Отрисовка микрочипов (с параллакс-смещением)
       chips.forEach((chip) => {
-        const dist = Math.hypot(chip.x + chip.w / 2 - mouse.x, chip.y + chip.h / 2 - mouse.y);
+        const screenY = chip.y - currentScrollY;
+        if (screenY + chip.h < -60 || screenY > height + 60) return;
+
+        const dist = Math.hypot(chip.x + chip.w / 2 - mouse.x, chip.y + chip.h / 2 - boardMouseY);
         const isNear = dist < activeRadius + 60;
 
         // Корпус микросхемы
-        ctx.fillStyle = isNear ? 'rgba(10, 16, 26, 0.95)' : 'rgba(7, 10, 16, 0.9)';
-        ctx.strokeStyle = isNear ? 'rgba(56, 189, 248, 0.6)' : 'rgba(51, 65, 85, 0.5)';
+        ctx.fillStyle = isNear ? 'rgba(10, 16, 26, 0.96)' : 'rgba(7, 10, 16, 0.9)';
+        ctx.strokeStyle = isNear ? 'rgba(56, 189, 248, 0.65)' : 'rgba(51, 65, 85, 0.5)';
         ctx.lineWidth = 1.2;
 
-        ctx.fillRect(chip.x, chip.y, chip.w, chip.h);
-        ctx.strokeRect(chip.x, chip.y, chip.w, chip.h);
+        ctx.fillRect(chip.x, screenY, chip.w, chip.h);
+        ctx.strokeRect(chip.x, screenY, chip.w, chip.h);
 
         // Ножки микросхемы (Pins)
         const pinLen = 5;
@@ -286,41 +471,44 @@ export default function MicroprocessorCanvas() {
           const px = chip.x + p * pinStep;
           // Верхние ножки
           ctx.beginPath();
-          ctx.moveTo(px, chip.y);
-          ctx.lineTo(px, chip.y - pinLen);
+          ctx.moveTo(px, screenY);
+          ctx.lineTo(px, screenY - pinLen);
           ctx.stroke();
           // Нижние ножки
           ctx.beginPath();
-          ctx.moveTo(px, chip.y + chip.h);
-          ctx.lineTo(px, chip.y + chip.h + pinLen);
+          ctx.moveTo(px, screenY + chip.h);
+          ctx.lineTo(px, screenY + chip.h + pinLen);
           ctx.stroke();
         }
 
         // Текстовая маркировка чипа
-        ctx.fillStyle = isNear ? 'rgba(56, 189, 248, 0.85)' : 'rgba(148, 163, 184, 0.45)';
+        ctx.fillStyle = isNear ? 'rgba(56, 189, 248, 0.9)' : 'rgba(148, 163, 184, 0.5)';
         ctx.font = '600 10.5px system-ui, -apple-system, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(chip.label, chip.x + chip.w / 2, chip.y + chip.h / 2 - 4);
+        ctx.fillText(chip.label, chip.x + chip.w / 2, screenY + chip.h / 2 - 4);
 
-        ctx.fillStyle = isNear ? 'rgba(96, 165, 250, 0.65)' : 'rgba(100, 116, 139, 0.35)';
+        ctx.fillStyle = isNear ? 'rgba(96, 165, 250, 0.7)' : 'rgba(100, 116, 139, 0.38)';
         ctx.font = '500 8.5px system-ui, -apple-system, sans-serif';
-        ctx.fillText(chip.sub, chip.x + chip.w / 2, chip.y + chip.h / 2 + 10);
+        ctx.fillText(chip.sub, chip.x + chip.w / 2, screenY + chip.h / 2 + 10);
 
         // Ключ первой ножки (Pin 1 Dot)
-        ctx.fillStyle = isNear ? 'rgba(56, 189, 248, 0.8)' : 'rgba(51, 65, 85, 0.5)';
+        ctx.fillStyle = isNear ? 'rgba(56, 189, 248, 0.85)' : 'rgba(51, 65, 85, 0.5)';
         ctx.beginPath();
-        ctx.arc(chip.x + 8, chip.y + 8, 2, 0, Math.PI * 2);
+        ctx.arc(chip.x + 8, screenY + 8, 2, 0, Math.PI * 2);
         ctx.fill();
       });
 
       // 4. Отрисовка vias
       for (let i = 0; i < vias.length; i++) {
         const v = vias[i];
-        const dist = Math.hypot(v.x - mouse.x, v.y - mouse.y);
+        const screenY = v.y - currentScrollY;
+        if (screenY < -20 || screenY > height + 20) continue;
+
+        const dist = Math.hypot(v.x - mouse.x, v.y - boardMouseY);
         const isNear = dist < activeRadius;
 
         ctx.beginPath();
-        ctx.arc(v.x, v.y, v.r, 0, Math.PI * 2);
+        ctx.arc(v.x, screenY, v.r, 0, Math.PI * 2);
         if (isNear) {
           ctx.strokeStyle = 'rgba(56, 189, 248, 0.7)';
           ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
@@ -332,7 +520,7 @@ export default function MicroprocessorCanvas() {
         ctx.stroke();
       }
 
-      // 5. Отрисовка световых импульсов по шинам
+      // 5. Отрисовка волновых импульсов по шинам
       for (let i = pulses.length - 1; i >= 0; i--) {
         const p = pulses[i];
         p.progress += p.speed;
@@ -347,9 +535,12 @@ export default function MicroprocessorCanvas() {
         const tailProg = Math.max(0, Math.min(1, p.progress - p.length));
 
         const hx = t.p1.x + (t.p2.x - t.p1.x) * headProg;
-        const hy = t.p1.y + (t.p2.y - t.p1.y) * headProg;
+        const hy = (t.p1.y + (t.p2.y - t.p1.y) * headProg) - currentScrollY;
         const tx = t.p1.x + (t.p2.x - t.p1.x) * tailProg;
-        const ty = t.p1.y + (t.p2.y - t.p1.y) * tailProg;
+        const ty = (t.p1.y + (t.p2.y - t.p1.y) * tailProg) - currentScrollY;
+
+        // Если импульс вне экрана — не рисуем градиент
+        if ((hy < -40 && ty < -40) || (hy > height + 40 && ty > height + 40)) continue;
 
         const grad = ctx.createLinearGradient(tx, ty, hx, hy);
         grad.addColorStop(0, 'rgba(56, 189, 248, 0)');
@@ -362,11 +553,6 @@ export default function MicroprocessorCanvas() {
         ctx.strokeStyle = grad;
         ctx.lineWidth = 1.8;
         ctx.stroke();
-
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.arc(hx, hy, 1.4, 0, Math.PI * 2);
-        ctx.fill();
       }
 
       animId = requestAnimationFrame(render);
@@ -377,6 +563,7 @@ export default function MicroprocessorCanvas() {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
@@ -384,7 +571,7 @@ export default function MicroprocessorCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 block w-full h-full"
+      className="fixed inset-0 pointer-events-none z-0"
       aria-hidden="true"
     />
   );

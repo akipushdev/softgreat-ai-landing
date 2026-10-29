@@ -34,7 +34,7 @@ export default function ArchitectureFlow() {
     {
       num: '03',
       title: '100% On-Premise для строгой тайны',
-      subtitle: 'Суверенные открытые модели',
+      subtitle: 'Локальные модели (Qwen 2.5 / Llama 3.3)',
       badge: '152-ФЗ РФ и 99-З РБ',
       badgeHighlight: true,
       icon: ShieldCheck,
