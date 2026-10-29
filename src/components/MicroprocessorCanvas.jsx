@@ -70,6 +70,7 @@ export default function MicroprocessorCanvas() {
         h: cpuH,
         label: 'ЯНДЕКС GPT / GEMINI / CHATGPT',
         sub: 'ОБЛАЧНЫЙ СТЕК LLM · БЫСТРЫЙ ОТКЛИК',
+        icon: 'cpu',
         pins: isMobile ? 12 : 18,
       });
 
@@ -80,9 +81,10 @@ export default function MicroprocessorCanvas() {
           x: isTablet ? cpuX - 190 : cpuX - 240,
           y: cpu1Y - 40,
           w: isTablet ? 140 : 160,
-          h: 75,
+          h: 80,
           label: '1С:ПРЕДПРИЯТИЕ',
           sub: 'ШЛЮЗ ODATA / REST',
+          icon: '1c',
           pins: 10,
         });
 
@@ -92,9 +94,10 @@ export default function MicroprocessorCanvas() {
           x: isTablet ? cpuX + cpuW + 50 : cpuX + cpuW + 80,
           y: cpu1Y - 40,
           w: isTablet ? 140 : 160,
-          h: 75,
+          h: 80,
           label: 'БИТРИКС24 CRM',
           sub: 'ПРОЦЕССЫ И СДЕЛКИ',
+          icon: 'crm',
           pins: 10,
         });
 
@@ -104,9 +107,10 @@ export default function MicroprocessorCanvas() {
           x: isTablet ? cpuX - 200 : cpuX - 250,
           y: cpu1Y + 120,
           w: isTablet ? 150 : 170,
-          h: 75,
+          h: 80,
           label: 'TELEGRAM / MAX',
           sub: 'БОТЫ ЦЕХА И ВОДИТЕЛЕЙ',
+          icon: 'bot',
           pins: 10,
         });
 
@@ -116,9 +120,10 @@ export default function MicroprocessorCanvas() {
           x: isTablet ? cpuX + cpuW + 50 : cpuX + cpuW + 80,
           y: cpu1Y + 120,
           w: isTablet ? 150 : 165,
-          h: 75,
+          h: 80,
           label: 'МОЙСКЛАД',
           sub: 'СКЛАДСКИЕ ОСТАТКИ',
+          icon: 'stock',
           pins: 10,
         });
       }
@@ -136,6 +141,7 @@ export default function MicroprocessorCanvas() {
         h: cpuH + 10,
         label: 'ON-PREMISE LLM · QWEN / LLAMA',
         sub: 'ЛОКАЛЬНЫЙ КОНТУР · 152-ФЗ РФ И 99-З РБ',
+        icon: 'shield-cpu',
         pins: isMobile ? 12 : 20,
       });
 
@@ -149,30 +155,33 @@ export default function MicroprocessorCanvas() {
           h: 80,
           label: 'LORA / QLORA АДАПТЕРЫ',
           sub: 'ДОНАСТРОЙКА ВЕСОВ МОДЕЛЕЙ',
+          icon: 'lora',
           pins: 10,
         });
 
-        // RAG / Поиск в корпоративной базе знаний (справа)
+        // RAG Модуль (справа)
         chips.push({
           id: 'chip-rag',
           x: isTablet ? cpuX + cpuW + 45 : cpuX + cpuW + 75,
           y: cpu2Y - 30,
           w: isTablet ? 150 : 180,
           h: 80,
-          label: 'RAG / ПОИСК В БАЗЕ',
-          sub: 'ВЕКТОРНЫЙ ПОИСК В НОРМАТИВАХ',
+          label: 'RAG МОДУЛЬ',
+          sub: 'СЕМАНТИЧЕСКИЙ ПОИСК В БАЗЕ',
+          icon: 'rag',
           pins: 10,
         });
 
-        // Vision OCR (слева ниже)
+        // Vision Сканер (слева ниже)
         chips.push({
           id: 'chip-vision',
           x: isTablet ? cpuX - 190 : cpuX - 230,
           y: cpu2Y + 140,
-          w: isTablet ? 145 : 165,
-          h: 75,
-          label: 'VISION & OCR УЗЕЛ',
-          sub: 'РАСПОЗНАВАНИЕ ТТН И ПЕЧАТЕЙ',
+          w: isTablet ? 145 : 170,
+          h: 80,
+          label: 'VISION СКАНЕР',
+          sub: 'ФОТОКОНТРОЛЬ ТТН И ПЕЧАТЕЙ',
+          icon: 'scanner',
           pins: 10,
         });
       }
@@ -183,15 +192,16 @@ export default function MicroprocessorCanvas() {
       const tier3Y = 2050;
 
       if (!isMobile) {
-        // PostgreSQL / pgvector
+        // Векторная база данных PostgreSQL / pgvector
         chips.push({
           id: 'chip-postgres',
-          x: cpuX - 40,
+          x: cpuX - 50,
           y: tier3Y,
-          w: isTablet ? 160 : 185,
+          w: isTablet ? 170 : 195,
           h: 85,
-          label: 'POSTGRESQL / PGVECTOR',
-          sub: 'РЕГИСТРЫ И ЭМБЕДДИНГИ',
+          label: 'ВЕКТОРНАЯ БАЗА ДАННЫХ',
+          sub: 'POSTGRESQL · PGVECTOR',
+          icon: 'db',
           pins: 12,
         });
 
@@ -204,6 +214,7 @@ export default function MicroprocessorCanvas() {
           h: 85,
           label: 'PYTHON CORE API',
           sub: 'АСИНХРОННЫЕ АГЕНТЫ',
+          icon: 'code',
           pins: 12,
         });
       } else {
@@ -214,8 +225,9 @@ export default function MicroprocessorCanvas() {
           y: tier3Y,
           w: cpuW,
           h: 85,
-          label: 'POSTGRESQL / РЕГИСТРЫ 1С',
-          sub: 'БАЗА ДАННЫХ И ИНДЕКСЫ',
+          label: 'ВЕКТОРНАЯ БАЗА ДАННЫХ',
+          sub: 'POSTGRESQL · PGVECTOR',
+          icon: 'db',
           pins: 12,
         });
       }
@@ -378,6 +390,99 @@ export default function MicroprocessorCanvas() {
 
     let lastBgPulse = 0;
 
+    // Векторная отрисовка микро-иконок на кристаллах чипов
+    const drawChipIcon = (c, iconType, cx, cy, isNear) => {
+      c.save();
+      c.strokeStyle = isNear ? 'rgba(56, 189, 248, 0.95)' : 'rgba(148, 163, 184, 0.65)';
+      c.fillStyle = isNear ? 'rgba(56, 189, 248, 0.95)' : 'rgba(148, 163, 184, 0.65)';
+      c.lineWidth = 1.1;
+
+      if (iconType === 'db') {
+        // База данных: 2 диска
+        c.beginPath();
+        c.ellipse(cx, cy - 3, 5.5, 2, 0, 0, Math.PI * 2);
+        c.stroke();
+        c.beginPath();
+        c.moveTo(cx - 5.5, cy - 3);
+        c.lineTo(cx - 5.5, cy + 3);
+        c.ellipse(cx, cy + 3, 5.5, 2, 0, 0, Math.PI);
+        c.lineTo(cx + 5.5, cy - 3);
+        c.stroke();
+      } else if (iconType === 'rag') {
+        // RAG: 3 узла графа связей
+        c.beginPath();
+        c.arc(cx, cy - 4, 1.8, 0, Math.PI * 2);
+        c.arc(cx - 4.5, cy + 3, 1.8, 0, Math.PI * 2);
+        c.arc(cx + 4.5, cy + 3, 1.8, 0, Math.PI * 2);
+        c.fill();
+        c.beginPath();
+        c.moveTo(cx, cy - 4);
+        c.lineTo(cx - 4.5, cy + 3);
+        c.lineTo(cx + 4.5, cy + 3);
+        c.closePath();
+        c.stroke();
+      } else if (iconType === 'scanner') {
+        // Сканер: прицел видоискателя [ · ]
+        c.beginPath();
+        c.moveTo(cx - 5, cy - 2);
+        c.lineTo(cx - 5, cy - 5);
+        c.lineTo(cx - 2, cy - 5);
+
+        c.moveTo(cx + 2, cy - 5);
+        c.lineTo(cx + 5, cy - 5);
+        c.lineTo(cx + 5, cy - 2);
+
+        c.moveTo(cx - 5, cy + 2);
+        c.lineTo(cx - 5, cy + 5);
+        c.lineTo(cx - 2, cy + 5);
+
+        c.moveTo(cx + 2, cy + 5);
+        c.lineTo(cx + 5, cy + 5);
+        c.lineTo(cx + 5, cy + 2);
+        c.stroke();
+
+        c.beginPath();
+        c.arc(cx, cy, 1.3, 0, Math.PI * 2);
+        c.fill();
+      } else if (iconType === 'bot') {
+        // Бот: бумажный самолетик
+        c.beginPath();
+        c.moveTo(cx - 5, cy + 4);
+        c.lineTo(cx + 5, cy);
+        c.lineTo(cx - 5, cy - 4);
+        c.lineTo(cx - 2, cy);
+        c.closePath();
+        c.stroke();
+      } else if (iconType === 'lora') {
+        // LoRA: ползунки адаптера весов
+        c.beginPath();
+        c.moveTo(cx - 4, cy - 5);
+        c.lineTo(cx - 4, cy + 5);
+        c.moveTo(cx + 4, cy - 5);
+        c.lineTo(cx + 4, cy + 5);
+        c.stroke();
+        c.beginPath();
+        c.arc(cx - 4, cy - 1, 1.8, 0, Math.PI * 2);
+        c.arc(cx + 4, cy + 2, 1.8, 0, Math.PI * 2);
+        c.fill();
+      } else if (iconType === 'cpu' || iconType === 'shield-cpu') {
+        // Процессорное ядро: кристалл с ножками
+        c.strokeRect(cx - 4.5, cy - 4.5, 9, 9);
+        c.fillRect(cx - 1.8, cy - 1.8, 3.6, 3.6);
+        // Микро-выводы ядра
+        c.beginPath();
+        c.moveTo(cx - 2, cy - 7); c.lineTo(cx - 2, cy - 4.5);
+        c.moveTo(cx + 2, cy - 7); c.lineTo(cx + 2, cy - 4.5);
+        c.moveTo(cx - 2, cy + 4.5); c.lineTo(cx - 2, cy + 7);
+        c.moveTo(cx + 2, cy + 4.5); c.lineTo(cx + 2, cy + 7);
+        c.stroke();
+      } else {
+        // Универсальный чип
+        c.strokeRect(cx - 4.5, cy - 3.5, 9, 7);
+      }
+      c.restore();
+    };
+
     const render = (time) => {
       // Плавное следование за курсором и параллакс-скроллом
       mouse.x += (mouse.targetX - mouse.x) * 0.1;
@@ -481,15 +586,24 @@ export default function MicroprocessorCanvas() {
           ctx.stroke();
         }
 
-        // Текстовая маркировка чипа
-        ctx.fillStyle = isNear ? 'rgba(56, 189, 248, 0.9)' : 'rgba(148, 163, 184, 0.5)';
-        ctx.font = '600 10.5px system-ui, -apple-system, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(chip.label, chip.x + chip.w / 2, screenY + chip.h / 2 - 4);
+        // Текстовая маркировка чипа и иконка
+        const hasIcon = Boolean(chip.icon);
+        const iconY = chip.h > 100 ? screenY + 28 : screenY + 20;
+        const labelY = hasIcon ? (chip.h > 100 ? screenY + 54 : screenY + 42) : screenY + chip.h / 2 - 4;
+        const subY = hasIcon ? (chip.h > 100 ? screenY + 74 : screenY + 58) : screenY + chip.h / 2 + 10;
 
-        ctx.fillStyle = isNear ? 'rgba(96, 165, 250, 0.7)' : 'rgba(100, 116, 139, 0.38)';
+        if (hasIcon) {
+          drawChipIcon(ctx, chip.icon, chip.x + chip.w / 2, iconY, isNear);
+        }
+
+        ctx.fillStyle = isNear ? 'rgba(255, 255, 255, 0.95)' : 'rgba(226, 232, 240, 0.6)';
+        ctx.font = '700 10.5px system-ui, -apple-system, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(chip.label, chip.x + chip.w / 2, labelY);
+
+        ctx.fillStyle = isNear ? 'rgba(56, 189, 248, 0.85)' : 'rgba(100, 116, 139, 0.45)';
         ctx.font = '500 8.5px system-ui, -apple-system, sans-serif';
-        ctx.fillText(chip.sub, chip.x + chip.w / 2, screenY + chip.h / 2 + 10);
+        ctx.fillText(chip.sub, chip.x + chip.w / 2, subY);
 
         // Ключ первой ножки (Pin 1 Dot)
         ctx.fillStyle = isNear ? 'rgba(56, 189, 248, 0.85)' : 'rgba(51, 65, 85, 0.5)';
