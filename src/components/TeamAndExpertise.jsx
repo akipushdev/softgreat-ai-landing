@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Database,
   CheckCircle2,
@@ -14,8 +14,41 @@ import {
 } from 'lucide-react';
 import SftgLogo from './SftgLogo';
 import engineerContactImg from '../assets/images/engineer_contact.jpg';
+import teamSlide2Img from '../assets/images/team_slide_2.jpg';
+import teamSlide3Img from '../assets/images/team_slide_3.jpg';
 
 export default function TeamAndExpertise() {
+  const slides = [
+    {
+      image: engineerContactImg,
+      badge: 'Архитектурный контур SFTG',
+      title: 'Инженерная команда SFTG AI',
+      desc: 'Ведущие системные архитекторы и разработчики интеграций',
+    },
+    {
+      image: teamSlide2Img,
+      badge: 'HighLoad & On-Premise',
+      title: 'Проектирование и стресс-тесты',
+      desc: 'Развёртывание закрытых контуров и распределённых баз',
+    },
+    {
+      image: teamSlide3Img,
+      badge: 'Интеграционный контур 1С',
+      title: 'Связка 1С и Битрикс24',
+      desc: 'Разработка официальных API-модулей и шин данных',
+    },
+  ];
+
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isPaused, slides.length]);
   const advantages = [
     {
       icon: <Database className="w-5 h-5 text-sky-400" />,
@@ -98,31 +131,62 @@ export default function TeamAndExpertise() {
       {/* Премиальный блок: Прямой диалог с опытными разработчиками архитектуры */}
       <div className="mb-20 rounded-3xl bg-[#0D0F14]/90 border border-white/[0.1] overflow-hidden p-6 sm:p-8 lg:p-10 shadow-2xl relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Левая колонка — Фото инженера за мониторами */}
-          <div className="lg:col-span-5 relative group">
+          {/* Левая колонка — Авто-карусель фото команды (бесконечный цикл) */}
+          <div
+            className="lg:col-span-5 relative group"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
             <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/5] max-h-[460px] w-full">
-              <img
-                src={engineerContactImg}
-                alt="Инженерная команда SFTG AI за проектированием архитектуры"
-                className="w-full h-full object-cover object-center filter brightness-95 contrast-105 group-hover:scale-105 transition-transform duration-700"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
+              {slides.map((slide, idx) => {
+                const isActive = activeSlide === idx;
+                return (
+                  <img
+                    key={idx}
+                    src={slide.image}
+                    alt={slide.title}
+                    className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-95 contrast-105 transition-all duration-700 ease-in-out ${
+                      isActive
+                        ? 'opacity-100 scale-100 z-10'
+                        : 'opacity-0 scale-105 z-0 pointer-events-none'
+                    }`}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                  />
+                );
+              })}
 
-              {/* Бейдж сверху: статус контура */}
-              <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] font-mono text-emerald-400">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none z-20" />
+
+              {/* Бейдж сверху: статус текущего контура */}
+              <div className="absolute top-4 left-4 z-30 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-[11px] font-mono text-emerald-400">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Архитектурный контур SFTG
+                <span>{slides[activeSlide].badge}</span>
+              </div>
+
+              {/* Индикаторы слайдов (3 полоски сверху справа) */}
+              <div className="absolute top-4 right-4 z-30 flex items-center gap-1.5 p-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
+                {slides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveSlide(idx)}
+                    aria-label={`Перейти к слайду ${idx + 1}`}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      activeSlide === idx
+                        ? 'w-6 bg-sky-400'
+                        : 'w-2 bg-white/30 hover:bg-white/60'
+                    }`}
+                  />
+                ))}
               </div>
 
               {/* Информационный лейбл снизу */}
-              <div className="absolute bottom-4 left-4 right-4 z-10 p-3.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10">
+              <div className="absolute bottom-4 left-4 right-4 z-30 p-3.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10">
                 <div className="flex items-center gap-2 text-white font-semibold text-sm">
                   <SftgLogo className="w-4 h-4" glow={false} />
-                  Инженерная команда SFTG AI
+                  <span>{slides[activeSlide].title}</span>
                 </div>
                 <div className="text-xs text-zinc-400 mt-0.5 font-sans">
-                  Ведущие системные архитекторы и разработчики интеграций
+                  {slides[activeSlide].desc}
                 </div>
               </div>
             </div>
