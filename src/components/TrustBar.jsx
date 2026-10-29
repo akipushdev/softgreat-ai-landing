@@ -16,7 +16,7 @@ export default function TrustBar() {
     {
       icon: ShieldCheck,
       title: 'Контур 152-ФЗ и 99-З РБ',
-      desc: 'Локальные открытые LLM (Qwen 2.5, Llama 3.3) на ваших собственных серверах.',
+      desc: 'Локальные SOTA-модели (DeepSeek-R1, Qwen 2.5, Llama 3.3) на ваших серверах.',
     },
     {
       icon: CheckCircle2,

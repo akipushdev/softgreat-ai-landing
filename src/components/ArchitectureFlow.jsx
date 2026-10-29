@@ -41,7 +41,7 @@ export default function ArchitectureFlow() {
       accent: 'border-emerald-500/50 text-emerald-300 bg-emerald-500/20',
       glow: 'shadow-[0_0_35px_rgba(16,185,129,0.22)] border-emerald-500/30',
       features: [
-        'Развёртывание локальных моделей (Qwen 2.5, Llama 3.3) внутри периметра',
+        'Развёртывание локальных SOTA-моделей (DeepSeek-R1, Qwen 2.5, Llama 3.3) внутри периметра',
         'Полная изоляция от внешнего интернета и зарубежных облаков',
         '100% защита банковской, коммерческой тайны и персональных данных',
       ],
