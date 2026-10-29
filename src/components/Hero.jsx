@@ -1,10 +1,9 @@
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
 import SftgLogo from './SftgLogo';
 
 export default function Hero() {
   return (
-    <section className="relative pt-36 pb-20 md:pt-48 md:pb-28 overflow-hidden flex flex-col items-center text-center px-4 sm:px-6">
+    <section className="relative pt-36 pb-28 md:pt-48 md:pb-36 min-h-[580px] overflow-hidden flex flex-col items-center justify-center text-center px-4 sm:px-6">
       {/* Декоративное мягкое радиальное свечение */}
       <div 
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-sky-500/[0.04] blur-[140px] rounded-full pointer-events-none"
@@ -25,28 +24,20 @@ export default function Hero() {
           </span>
         </h1>
 
-        {/* Подзаголовок: разбивка на 3 удобные строчки */}
-        <div className="max-w-3xl text-base sm:text-lg text-zinc-400 font-normal leading-relaxed mb-10 font-sans space-y-2">
+        {/* Подзаголовок: 3 ключевых действия и срок запуска */}
+        <div className="max-w-3xl text-base sm:text-lg text-zinc-400 font-normal leading-relaxed font-sans space-y-2.5">
           <p className="text-zinc-200 font-medium">
-            Интегрируем автономных агентов поверх выстроенной инфраструктуры 1С и Битрикс24.
+            Настраиваем и донастраиваем инфраструктуру 1С и Битрикс24.
+          </p>
+          <p className="text-zinc-300">
+            Интегрируем автономных агентов поверх выстроенных бизнес-процессов компании.
           </p>
           <p className="text-zinc-400">
             Работаем через штатные API: убираем ручной ввод первички, ускоряем расценку смет и подключаем ассистентов к базам данных.
           </p>
-          <p className="text-sky-300 font-medium text-sm sm:text-base">
+          <p className="text-sky-300 font-medium text-sm sm:text-base pt-2">
             Запуск первого рабочего модуля — от 14 до 30 дней.
           </p>
-        </div>
-
-        {/* Кнопка перехода к примерам */}
-        <div className="flex items-center justify-center w-full sm:w-auto">
-          <a
-            href="#automation-examples"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-medium text-white bg-white/[0.06] border border-white/15 hover:bg-white/[0.12] hover:border-white/30 transition-all duration-300 active:scale-[0.98] shadow-lg shadow-black/40 backdrop-blur-sm"
-          >
-            <span>Примеры решений</span>
-            <ChevronDown className="w-4 h-4 text-zinc-400" />
-          </a>
         </div>
       </div>
     </section>
