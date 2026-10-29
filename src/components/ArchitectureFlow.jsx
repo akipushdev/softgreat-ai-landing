@@ -1,63 +1,63 @@
 import React from 'react';
-import { Database, ShieldCheck, Cpu, CheckCircle2, ArrowRight, ArrowDown, Lock, Server, Cloud } from 'lucide-react';
+import { Database, ShieldCheck, ArrowRight, Lock, Server, Cloud, Clock } from 'lucide-react';
 
 export default function ArchitectureFlow() {
   const steps = [
     {
       num: '01',
-      title: 'Ваша действующая 1С / Битрикс24',
-      subtitle: 'Без изменения ядра системы',
-      badge: 'Исходный контур',
+      title: 'Параллельное API-подключение',
+      subtitle: 'Без изменения ядра и остановки процессов',
+      badge: 'Zero Downtime',
       icon: Database,
       accent: 'border-sky-500/30 text-sky-400 bg-sky-500/10',
       glow: 'shadow-[0_0_25px_rgba(56,189,248,0.12)]',
       features: [
         '1С:ERP, УТ, КА, БП и Битрикс24 CRM',
-        'Штатное подключение через OData и REST API',
-        'Гарантия вендора и автообновления баз сохраняются',
+        'Штатное подключение через OData 4.0 и REST API',
+        'Гарантия вендора, автообновления и рабочий процесс сохраняются',
       ],
     },
     {
       num: '02',
-      title: 'Облачные LLM и обфускация данных',
-      subtitle: 'Оптимизация коста и доступность 24/7',
+      title: 'Облачные LLM-сервисы',
+      subtitle: 'Высокая скорость и оптимизация затрат',
       badge: 'Экономичный контур',
       icon: Cloud,
       accent: 'border-blue-500/30 text-blue-400 bg-blue-500/10',
       glow: 'shadow-[0_0_25px_rgba(59,130,246,0.12)]',
       features: [
-        'Обфускация и маскирование коммерческих и персональных данных',
-        'Выбор самых дешевых и точных моделей под каждую задачу',
-        'Оптимизация костов на токены и поддержка высокой доступности 24/7',
+        'Интеграция с современными моделями (YandexGPT, GigaChat, API)',
+        'Динамический роутинг задач под минимальную стоимость токенов',
+        'Предварительная деперсонализация и маскирование коммерческих данных',
       ],
     },
     {
       num: '03',
-      title: '100% On-Premise для строгой тайны',
-      subtitle: 'Локальные модели (Qwen 2.5 / Llama 3.3)',
+      title: 'Внутренний закрытый контур',
+      subtitle: '100% On-Premise на ваших серверах',
       badge: '152-ФЗ РФ и 99-З РБ',
       badgeHighlight: true,
       icon: ShieldCheck,
       accent: 'border-emerald-500/50 text-emerald-300 bg-emerald-500/20',
       glow: 'shadow-[0_0_35px_rgba(16,185,129,0.22)] border-emerald-500/30',
       features: [
-        'Строгое соблюдение 152-ФЗ РФ и 99-З РБ: данные внутри периметра',
-        'Локальное развёртывание моделей (Qwen 2.5, Llama 3.3) на ваших серверах',
-        'Полная независимость от внешних провайдеров и зарубежных облаков',
+        'Развёртывание локальных моделей (Qwen 2.5, Llama 3.3) внутри периметра',
+        'Полная изоляция от внешнего интернета и зарубежных облаков',
+        '100% защита банковской, коммерческой тайны и персональных данных',
       ],
     },
     {
       num: '04',
-      title: 'Готовый оцифрованный результат',
-      subtitle: 'Прямо в учетную систему',
-      badge: 'Экономический эффект',
-      icon: CheckCircle2,
+      title: 'Инженерный SLA и поддержка 24/7',
+      subtitle: 'Гарантированная надёжность и актуальность',
+      badge: 'Сервисный контур',
+      icon: Clock,
       accent: 'border-amber-500/30 text-amber-400 bg-amber-500/10',
       glow: 'shadow-[0_0_25px_rgba(251,191,36,0.12)]',
       features: [
-        'Проведённая накладная УПД за 20 секунд',
-        'Сделка с квалификацией лида в Битрикс24 ночью',
-        'Расцененная смета на 300 позиций за несколько минут',
+        'Непрерывный мониторинг очередей задач и времени отклика 24/7',
+        'Дообучение моделей при изменении номенклатуры 1С и регламентов',
+        'Регулярные обновления версий без простоя боевых баз данных',
       ],
     },
   ];
@@ -71,10 +71,10 @@ export default function ArchitectureFlow() {
           Архитектурный контур
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-          Бесшовное подключение без изменения ядра 1С / Битрикс24
+          Бесшовное подключение без остановки бизнес-процессов
         </h2>
         <p className="max-w-2xl text-base sm:text-lg text-zinc-400 font-normal text-pretty">
-          Как данные безопасно циркулируют между вашими учетными базами и локальными ИИ-моделями за 4 прозрачных шага.
+          Варианты интеграции, суверенный внутренний контур и инженерное сопровождение для действующей ИТ-инфраструктуры предприятия.
         </p>
       </div>
 
@@ -138,20 +138,13 @@ export default function ArchitectureFlow() {
 
                   {/* Статус-бар внизу карточки */}
                   <div className="mt-6 pt-3 border-t border-white/[0.04] flex items-center justify-between text-[11px] font-mono text-zinc-500">
-                    <span>ШАГ {idx + 1} ИЗ 4</span>
+                    <span>КОНТУР 0{idx + 1}</span>
                     <span className="text-emerald-400/80 flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
-                      ГОТОВО К ПОДКЛЮЧЕНИЮ
+                      АКТИВЕН
                     </span>
                   </div>
                 </div>
-
-                {/* Стрелка перехода для мобильных и планшетов */}
-                {!isLast && (
-                  <div className="lg:hidden flex justify-center py-3 text-zinc-600">
-                    <ArrowDown className="w-5 h-5 animate-bounce" />
-                  </div>
-                )}
               </div>
             );
           })}

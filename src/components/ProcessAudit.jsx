@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, BarChart3, Clock, Compass, Shield } from 'lucide-react';
+import { ArrowRight, BarChart3, Clock, Compass, Shield, Zap, CheckCircle2 } from 'lucide-react';
 
 export default function ProcessAudit() {
   const deliverables = [
@@ -67,6 +67,34 @@ export default function ProcessAudit() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Оцифрованные результаты внедрения на этапе пилота */}
+        <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r from-sky-950/30 via-emerald-950/20 to-amber-950/20 border border-white/10">
+          <div className="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-4 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-amber-400" />
+            Оцифрованные результаты, которые мы фиксируем на этапе пилота:
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl font-mono font-extrabold text-emerald-400 shrink-0">20 сек</span>
+              <div className="text-xs text-zinc-300 leading-relaxed font-sans">
+                Разбор входящей накладной УПД со штампом и автоматическое создание документа в 1С без ручного ввода.
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-2xl font-mono font-extrabold text-sky-400 shrink-0">24/7</span>
+              <div className="text-xs text-zinc-300 leading-relaxed font-sans">
+                Ночная квалификация лидов в Telegram, онлайн-проверка остатков в 1С и создание сделки в Битрикс24.
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-2xl font-mono font-extrabold text-amber-400 shrink-0">8 мин</span>
+              <div className="text-xs text-zinc-300 leading-relaxed font-sans">
+                Авто-расценка строительной или производственной сметы на 300 строк по 5 поставщикам вместо 2 дней.
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Кнопка записи */}
