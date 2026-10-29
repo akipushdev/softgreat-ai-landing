@@ -79,20 +79,20 @@ export default function Hero() {
               return (
                 <div
                   key={chip.id}
-                  className="group flex flex-col items-center justify-center text-center p-3 sm:py-3.5 sm:px-2 rounded-md bg-[#070a10]/90 border border-slate-700/60 hover:border-sky-400/80 hover:bg-[#0a101d] transition-all duration-300 shadow-sm hover:shadow-[0_0_16px_rgba(56,189,248,0.15)] cursor-default"
+                  className="group flex flex-col items-center justify-center text-center p-3 sm:py-3.5 sm:px-2 rounded-md bg-[#060910]/75 border border-white/[0.08] hover:border-sky-500/30 hover:bg-[#080d18] transition-all duration-300 cursor-default"
                 >
-                  {/* Иконка в синем стиле */}
-                  <div className="w-6 h-6 rounded bg-sky-500/10 border border-sky-400/30 flex items-center justify-center text-sky-400 mb-2 group-hover:border-sky-400 group-hover:bg-sky-500/20 group-hover:shadow-[0_0_10px_rgba(56,189,248,0.35)] transition-all">
-                    <Icon className="w-3.5 h-3.5 text-sky-400" />
+                  {/* Иконка в мягком ламповом синем стиле */}
+                  <div className="w-6 h-6 rounded bg-sky-400/[0.07] border border-sky-400/20 flex items-center justify-center text-sky-400/80 mb-2 group-hover:text-sky-300 group-hover:border-sky-400/40 transition-colors">
+                    <Icon className="w-3.5 h-3.5" />
                   </div>
 
-                  {/* Название */}
-                  <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-slate-100 uppercase">
+                  {/* Название — спокойный приглушённый моно-шрифт */}
+                  <span className="text-[11px] sm:text-xs font-mono font-medium tracking-wider text-zinc-300/85 uppercase">
                     {chip.label}
                   </span>
 
-                  {/* Подзаголовок-выгода в синем моно-стиле */}
-                  <span className="text-[9.5px] sm:text-[10px] font-mono text-sky-400/90 tracking-wide mt-1 uppercase">
+                  {/* Подзаголовок-выгода — мягкий ламповый тон */}
+                  <span className="text-[9.5px] sm:text-[10px] font-mono text-zinc-300/90 tracking-wide mt-1 uppercase">
                     {chip.detail}
                   </span>
                 </div>
