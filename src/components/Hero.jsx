@@ -31,7 +31,7 @@ const CAPABILITY_CHIPS = [
     id: 'c-vis',
     icon: ScanLine,
     label: 'Vision сканер',
-    detail: 'Контроль деталей',
+    detail: 'Контроль и автоматизация на производстве',
   },
 ];
 
@@ -92,7 +92,7 @@ export default function Hero() {
                   </span>
 
                   {/* Подзаголовок-выгода — мягкий ламповый тон */}
-                  <span className="text-[9.5px] sm:text-[10px] font-mono text-zinc-300/90 tracking-wide mt-1 uppercase">
+                  <span className="text-[9.5px] sm:text-[10px] font-mono text-zinc-300/90 tracking-wide mt-1 uppercase leading-tight">
                     {chip.detail}
                   </span>
                 </div>
