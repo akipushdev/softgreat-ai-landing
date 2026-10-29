@@ -46,7 +46,7 @@ export default function TeamAndExpertise() {
     if (isPaused) return;
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 3500);
+    }, 7000);
     return () => clearInterval(interval);
   }, [isPaused, slides.length]);
   const advantages = [
