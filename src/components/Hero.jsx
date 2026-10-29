@@ -8,30 +8,45 @@ const CAPABILITY_CHIPS = [
     icon: FileSpreadsheet,
     label: '1С: Первичка',
     detail: 'Без ручного ввода',
+    cardHover: 'hover:border-amber-500/40 hover:bg-amber-950/15 hover:shadow-[0_0_20px_rgba(245,158,11,0.12)]',
+    iconBox: 'bg-amber-400/[0.06] border-amber-400/20 text-amber-400/80 group-hover:text-amber-300 group-hover:border-amber-400/50 group-hover:bg-amber-400/15',
+    detailHover: 'group-hover:text-amber-300/90',
   },
   {
     id: 'c-est',
     icon: Calculator,
     label: 'Сметы и КП',
     detail: 'Расчёт за минуты',
+    cardHover: 'hover:border-emerald-500/40 hover:bg-emerald-950/15 hover:shadow-[0_0_20px_rgba(52,211,153,0.12)]',
+    iconBox: 'bg-emerald-400/[0.06] border-emerald-400/20 text-emerald-400/80 group-hover:text-emerald-300 group-hover:border-emerald-400/50 group-hover:bg-emerald-400/15',
+    detailHover: 'group-hover:text-emerald-300/90',
   },
   {
     id: 'c-sup',
     icon: Bot,
     label: 'Саппорт 24/7',
     detail: 'Диалог с клиентами',
+    cardHover: 'hover:border-sky-500/40 hover:bg-sky-950/15 hover:shadow-[0_0_20px_rgba(56,189,248,0.12)]',
+    iconBox: 'bg-sky-400/[0.06] border-sky-400/20 text-sky-400/80 group-hover:text-sky-300 group-hover:border-sky-400/50 group-hover:bg-sky-400/15',
+    detailHover: 'group-hover:text-sky-300/90',
   },
   {
     id: 'c-log',
     icon: Truck,
     label: 'Логистика',
     detail: 'Контроль рейсов',
+    cardHover: 'hover:border-indigo-500/40 hover:bg-indigo-950/15 hover:shadow-[0_0_20px_rgba(129,140,248,0.12)]',
+    iconBox: 'bg-indigo-400/[0.06] border-indigo-400/20 text-indigo-400/80 group-hover:text-indigo-300 group-hover:border-indigo-400/50 group-hover:bg-indigo-400/15',
+    detailHover: 'group-hover:text-indigo-300/90',
   },
   {
     id: 'c-vis',
     icon: ScanLine,
     label: 'Vision сканер',
     detail: 'Контроль и автоматизация на производстве',
+    cardHover: 'hover:border-rose-500/40 hover:bg-rose-950/15 hover:shadow-[0_0_20px_rgba(244,63,94,0.12)]',
+    iconBox: 'bg-rose-400/[0.06] border-rose-400/20 text-rose-400/80 group-hover:text-rose-300 group-hover:border-rose-400/50 group-hover:bg-rose-400/15',
+    detailHover: 'group-hover:text-rose-300/90',
   },
 ];
 
@@ -79,20 +94,20 @@ export default function Hero() {
               return (
                 <div
                   key={chip.id}
-                  className="group flex flex-col items-center justify-center text-center p-3 sm:py-3.5 sm:px-2 rounded-md bg-[#060910]/75 border border-white/[0.08] hover:border-sky-500/30 hover:bg-[#080d18] transition-all duration-300 cursor-default"
+                  className={`group flex flex-col items-center justify-center text-center p-3 sm:py-3.5 sm:px-2 rounded-md bg-[#060910]/75 border border-white/[0.08] ${chip.cardHover} transition-all duration-300 cursor-default`}
                 >
-                  {/* Иконка в мягком ламповом синем стиле */}
-                  <div className="w-6 h-6 rounded bg-sky-400/[0.07] border border-sky-400/20 flex items-center justify-center text-sky-400/80 mb-2 group-hover:text-sky-300 group-hover:border-sky-400/40 transition-colors">
+                  {/* Иконка в ламповом стиле с подсветкой при наведении на блок */}
+                  <div className={`w-6 h-6 rounded border flex items-center justify-center mb-2 transition-all duration-300 ${chip.iconBox}`}>
                     <Icon className="w-3.5 h-3.5" />
                   </div>
 
                   {/* Название — спокойный приглушённый моно-шрифт */}
-                  <span className="text-[11px] sm:text-xs font-mono font-medium tracking-wider text-zinc-300/85 uppercase">
+                  <span className="text-[11px] sm:text-xs font-mono font-medium tracking-wider text-zinc-300/85 uppercase group-hover:text-zinc-100 transition-colors">
                     {chip.label}
                   </span>
 
-                  {/* Подзаголовок-выгода — мягкий ламповый тон */}
-                  <span className="text-[9.5px] sm:text-[10px] font-mono text-zinc-300/90 tracking-wide mt-1 uppercase leading-tight">
+                  {/* Подзаголовок-выгода — подсвечивается смысловым цветом */}
+                  <span className={`text-[9.5px] sm:text-[10px] font-mono text-zinc-300/90 tracking-wide mt-1 uppercase leading-tight ${chip.detailHover} transition-colors`}>
                     {chip.detail}
                   </span>
                 </div>
