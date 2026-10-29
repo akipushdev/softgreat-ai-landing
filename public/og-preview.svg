@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#030508"/>
+      <stop offset="60%" stop-color="#080F1D"/>
+      <stop offset="100%" stop-color="#020406"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="600" y1="0" x2="600" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#080F1D" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#A1A1AA"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Фон -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="180" r="450" fill="url(#glow)"/>
+
+  <!-- Трассировка микросхемы на фоне -->
+  <path d="M100 200h200l50 50h300l40-40h200l50 50h200M150 450h300l40-40h250l60 60h300" stroke="#1E293B" stroke-width="2" fill="none" opacity="0.6"/>
+  <circle cx="300" cy="200" r="4" fill="#38BDF8"/>
+  <circle cx="650" cy="250" r="4" fill="#38BDF8"/>
+  <circle cx="890" cy="210" r="4" fill="#38BDF8"/>
+  <circle cx="450" cy="450" r="4" fill="#38BDF8"/>
+  <circle cx="740" cy="410" r="4" fill="#38BDF8"/>
+
+  <!-- Логотип SFTG AI -->
+  <g transform="translate(100, 90)">
+    <!-- Чип логотип -->
+    <rect x="0" y="0" width="48" height="48" rx="12" fill="#0E1726" stroke="#38BDF8" stroke-width="2"/>
+    <circle cx="24" cy="24" r="6" fill="#38BDF8"/>
+    <text x="64" y="34" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="800" fill="#FFFFFF" letter-spacing="-0.5">SFTG <tspan fill="#38BDF8">AI</tspan></text>
+  </g>
+
+  <!-- Бейдж экосистем -->
+  <g transform="translate(100, 175)">
+    <rect x="0" y="0" width="460" height="34" rx="17" fill="#0E1726" stroke="#1E293B" stroke-width="1"/>
+    <circle cx="18" cy="17" r="4" fill="#10B981"/>
+    <text x="32" y="22" font-family="monospace" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="1">1С:ПРЕДПРИЯТИЕ · БИТРИКС24 · ON-PREMISE</text>
+  </g>
+
+  <!-- Главный заголовок H1 -->
+  <text x="100" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" fill="url(#textGrad)" letter-spacing="-1">
+    Автоматизация бизнес-процессов
+  </text>
+  <text x="100" y="345" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" fill="url(#textGrad)" letter-spacing="-1">
+    с помощью прикладного ИИ
+  </text>
+
+  <!-- Подзаголовок -->
+  <text x="100" y="420" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400" fill="#94A3B8">
+    Интегрируем автономных агентов поверх выстроенной инфраструктуры 1С и Битрикс24.
+  </text>
+  <text x="100" y="455" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400" fill="#94A3B8">
+    Убираем ручной ввод первички, расцениваем сметы и ведем ночные сделки в CRM.
+  </text>
+
+  <!-- Полоса преимуществ внизу -->
+  <g transform="translate(100, 520)">
+    <rect x="0" y="0" width="1000" height="50" rx="12" fill="#0A101D" stroke="#1E293B" stroke-width="1"/>
+    
+    <text x="30" y="31" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#38BDF8">Запуск за 14–30 дней</text>
+    <circle cx="210" cy="25" r="3" fill="#334155"/>
+    
+    <text x="240" y="31" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">30 дней поддержки после запуска</text>
+    <circle cx="530" cy="25" r="3" fill="#334155"/>
+
+    <text x="560" y="31" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">Без остановки процессов</text>
+    <circle cx="780" cy="25" r="3" fill="#334155"/>
+
+    <text x="810" y="31" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#10B981">152-ФЗ и 99-З РБ</text>
+  </g>
+</svg>
