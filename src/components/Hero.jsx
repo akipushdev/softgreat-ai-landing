@@ -4,32 +4,32 @@ import { FileSpreadsheet, Calculator, Bot, Truck, ScanLine } from 'lucide-react'
 
 const CAPABILITY_CHIPS = [
   {
+    id: 'c-1c',
     icon: FileSpreadsheet,
-    code: 'IC-01',
     label: 'Первичка 1С',
     detail: 'Без ручного ввода',
   },
   {
+    id: 'c-est',
     icon: Calculator,
-    code: 'IC-02',
     label: 'Сметы и КП',
     detail: 'Расчёт за минуты',
   },
   {
+    id: 'c-sup',
     icon: Bot,
-    code: 'IC-03',
     label: 'Саппорт 24/7',
     detail: 'Диалог с клиентами',
   },
   {
+    id: 'c-log',
     icon: Truck,
-    code: 'IC-04',
     label: 'Логистика',
     detail: 'Контроль рейсов',
   },
   {
+    id: 'c-vis',
     icon: ScanLine,
-    code: 'IC-05',
     label: 'Vision',
     detail: 'Контроль деталей',
   },
@@ -78,7 +78,7 @@ export default function Hero() {
               const Icon = chip.icon;
               return (
                 <div
-                  key={chip.code}
+                  key={chip.id}
                   className="relative group flex flex-col items-center justify-center text-center p-3 sm:py-3.5 sm:px-2 rounded-lg bg-[#0a0e17]/95 border border-zinc-800/80 hover:border-sky-500/50 hover:bg-[#0e1422] transition-all duration-300 shadow-sm hover:shadow-[0_0_20px_rgba(56,189,248,0.12)] cursor-default"
                 >
                   {/* Контактные ножки микросхемы (SMD pads) */}
@@ -95,11 +95,6 @@ export default function Hero() {
 
                   {/* Метка вывода 1 (Pin 1 index mark) */}
                   <span className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-zinc-700 group-hover:bg-sky-400 transition-colors" />
-
-                  {/* Инженерный код чипа */}
-                  <span className="text-[9px] font-mono text-zinc-300/80 group-hover:text-sky-300/90 tracking-wider mb-1 uppercase">
-                    {chip.code}
-                  </span>
 
                   {/* Иконка */}
                   <Icon className="w-4 h-4 text-sky-400 mb-1.5 group-hover:scale-110 transition-transform" />
