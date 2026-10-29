@@ -101,9 +101,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Срок запуска */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-950/40 border border-sky-800/40 text-xs sm:text-sm font-mono text-sky-300">
-          <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+        {/* Срок запуска — зелёный инженерный статус запуска */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/25 text-xs sm:text-sm font-mono text-emerald-300">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
           <span>Запуск первого рабочего модуля — от 14 до 30 дней</span>
         </div>
       </div>
