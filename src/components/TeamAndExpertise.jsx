@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Database,
   CheckCircle2,
@@ -41,14 +41,31 @@ export default function TeamAndExpertise() {
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const carouselRef = useRef(null);
 
   useEffect(() => {
-    if (isPaused) return;
+    const el = carouselRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInView || isPaused) return;
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
     }, 7000);
     return () => clearInterval(interval);
-  }, [isPaused, slides.length]);
+  }, [isInView, isPaused, slides.length]);
   const advantages = [
     {
       icon: <Database className="w-5 h-5 text-sky-400" />,
@@ -131,8 +148,9 @@ export default function TeamAndExpertise() {
       {/* Премиальный блок: Прямой диалог с опытными разработчиками архитектуры */}
       <div className="mb-20 rounded-3xl bg-[#0D0F14]/90 border border-white/[0.1] overflow-hidden p-6 sm:p-8 lg:p-10 shadow-2xl relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Левая колонка — Авто-карусель фото команды (бесконечный цикл) */}
+          {/* Левая колонка — Авто-карусель фото команды (бесконечный цикл с автостартом при появлении в зоне видимости) */}
           <div
+            ref={carouselRef}
             className="lg:col-span-5 relative group"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
