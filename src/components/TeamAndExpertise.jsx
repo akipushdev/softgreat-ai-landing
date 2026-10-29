@@ -9,7 +9,8 @@ import {
   Layers,
   Terminal,
   Sparkles,
-  UserCheck
+  Server,
+  Workflow
 } from 'lucide-react';
 import SftgLogo from './SftgLogo';
 import engineerContactImg from '../assets/images/engineer_contact.jpg';
@@ -35,19 +36,24 @@ export default function TeamAndExpertise() {
 
   const competencies = [
     {
-      icon: <Layers className="w-5 h-5 text-white" />,
-      title: 'Глубокая интеграция с 1С и Битрикс24',
-      desc: 'Понимаем структуру регистров, бизнес-процессы CRM и типовые конфигурации. Встраиваемся в привычные интерфейсы сотрудников без конфликтов обмена.'
+      icon: <Workflow className="w-5 h-5 text-white" />,
+      title: 'Настройка и трансформация Битрикс24',
+      desc: 'Инициализация с нуля или аудит базовой CRM. Проектируем смарт-процессы, сложные воронки и внедряем агентную ИИ-систему под задачи вашей компании.'
     },
     {
-      icon: <Terminal className="w-5 h-5 text-white" />,
-      title: 'Опыт стабильных высоконагруженных систем',
-      desc: 'Проектирование отказоустойчивых корпоративных сервисов, очередей сообщений и закрытых контуров, работающих годами без сбоев.'
+      icon: <Database className="w-5 h-5 text-white" />,
+      title: '1С:Предприятие и бесшовная связка',
+      desc: 'Связка через официальные API 1С и Битрикс24. Синхронизация номенклатуры, остатков и счетов в реальном времени с полным сохранением гарантии вендора.'
+    },
+    {
+      icon: <Server className="w-5 h-5 text-white" />,
+      title: 'Развёртывание на вашем железе или в облаке',
+      desc: '100% On-Premise на внутренних серверах компании, защищённые ЦОД РФ и РБ или облака (Яндекс Облако, Cloud.ru, Google Cloud) с моделями DeepSeek, Qwen и Llama.'
     },
     {
       icon: <Sparkles className="w-5 h-5 text-white" />,
-      title: 'Сопровождение, докручивание и развитие',
-      desc: 'Не бросаем проект после запуска: берем на себя мониторинг доступности, дообучение моделей при изменении номенклатуры и регулярную калибровку точности.'
+      title: 'Сопровождение, докручивание и SLA 24/7',
+      desc: 'Гарантийная поддержка, калибровка точности на реальном потоке данных, дообучение при росте бизнеса и непрерывный мониторинг очередей.'
     }
   ];
 
@@ -158,8 +164,8 @@ export default function TeamAndExpertise() {
         </div>
       </div>
 
-      {/* Триединство компетенций (3 большие карточки) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      {/* 4 ключевые компетенции команды */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
         {competencies.map((comp, idx) => (
           <div
             key={idx}
