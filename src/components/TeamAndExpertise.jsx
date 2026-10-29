@@ -13,14 +13,14 @@ import {
   Workflow
 } from 'lucide-react';
 import SftgLogo from './SftgLogo';
-import engineerContactImg from '../assets/images/engineer_contact.jpg';
+import teamSlide1Img from '../assets/images/team_slide_1.jpg';
 import teamSlide2Img from '../assets/images/team_slide_2.jpg';
 import teamSlide3Img from '../assets/images/team_slide_3.jpg';
 
 export default function TeamAndExpertise() {
   const slides = [
     {
-      image: engineerContactImg,
+      image: teamSlide1Img,
       badge: 'Архитектурный контур SFTG',
       title: 'Инженерная команда SFTG AI',
       desc: 'Ведущие системные архитекторы и разработчики интеграций',
