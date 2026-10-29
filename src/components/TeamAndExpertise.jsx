@@ -213,7 +213,7 @@ export default function TeamAndExpertise() {
           {/* Правая колонка — Прямой диалог с опытными разработчиками */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-semibold text-sky-400 uppercase tracking-wider mb-4 w-fit">
-              Команда разработки & Архитектура
+              Команда ИИ-разработки и архитектура
             </div>
 
             <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4">
